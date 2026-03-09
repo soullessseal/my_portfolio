@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 
 import type { SiteAssets } from "@/sanity/lib/queries";
 
@@ -41,9 +42,13 @@ const DEVICE_CONFIG = {
       right: "max(0px, calc((100vw - 560px) / 2))",
     },
     imageClassName:
-      "absolute left-[-2.3%] top-[-97.51%] h-[226.63%] w-[169.89%] max-w-none min-[480px]:top-[-72%] min-[480px]:h-[210%] min-[768px]:left-[6%]",
+      "absolute left-[-2.3%] top-[-108%] h-[226.63%] w-[169.89%] max-w-none min-[480px]:top-[-84%] min-[480px]:h-[210%] min-[768px]:left-[6%]",
     introTextClassName:
-      "w-full text-mb-h5 text-word2-50 md:!font-bold md:![font-size:16px] md:![line-height:1.25] md:![font-family:var(--font-pc-h5-family)]",
+      "w-full text-mb-h5 text-word2-50 md:!font-bold md:![font-size:16px] md:![font-family:var(--font-pc-h5-family)]",
+    introTextStyle: {
+      letterSpacing: "0.08em",
+      lineHeight: 1.45,
+    } satisfies CSSProperties,
     designerClassName:
       "h-[29.44px] w-[204.83px] min-[360px]:h-[clamp(29.44px,calc(29.44px_+_(100vw_-_360px)_/_12),47.1px)] min-[360px]:w-[clamp(204.83px,calc(204.83px_+_(100vw_-_360px)_/_4.3),327.73px)]",
     tagVariant: "mb" as const,
@@ -69,6 +74,10 @@ const DEVICE_CONFIG = {
     imageClassName:
       "absolute left-[-48.07%] top-[-140.83%] h-[302.59%] w-[226.83%] max-w-none",
     introTextClassName: "w-full max-w-[928px] text-pc-h5 text-word2-50",
+    introTextStyle: {
+      letterSpacing: "0.1em",
+      lineHeight: 1.5,
+    } satisfies CSSProperties,
     designerClassName: "h-[47.104px] w-[327.729px]",
     tagVariant: "pc" as const,
   },
@@ -141,7 +150,7 @@ export default function HomeHeroSection({
           data-name="Intro"
           data-node-id={config.introNodeId}
         >
-          <p className={config.introTextClassName} data-node-id={config.introTextNodeId}>
+          <p className={config.introTextClassName} style={config.introTextStyle} data-node-id={config.introTextNodeId}>
             <span>我是</span>
             <span className="text-highlight">
               設計師 Betty
