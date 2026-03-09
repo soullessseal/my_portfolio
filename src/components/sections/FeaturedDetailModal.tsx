@@ -596,6 +596,52 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
         },
       });
       strategyTimeline.to({}, { duration: 0.08 }).to(strategyTrackRef.current, { xPercent: strategyMaxShiftPercent, ease: "none", duration: 0.86 }).to({}, { duration: 0.08 });
+
+      if (
+        project.key === "project-2" &&
+        detail.processFlowItems?.length &&
+        processFlowRef.current &&
+        processFlowContentRef.current &&
+        processFlowTrackRef.current
+      ) {
+        gsap.fromTo(
+          processFlowContentRef.current,
+          { y: 90, autoAlpha: 0, scale: 0.97 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
+            ease: "none",
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: processFlowRef.current,
+              start: "top 90%",
+              end: "top 55%",
+              scrub: 1.2,
+            },
+          },
+        );
+
+        const processFlowCount = detail.processFlowItems.length;
+        const processFlowMaxShiftPercent =
+          processFlowCount > 1 ? -((processFlowCount - 1) / processFlowCount) * 100 : 0;
+        const processFlowTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: processFlowRef.current,
+            start: "top top",
+            end: isMobileViewport
+              ? `+=${Math.round(145 * Math.max(1, (processFlowCount - 1) / 2))}%`
+              : `+=${Math.round(130 * Math.max(1, (processFlowCount - 1) / 2))}%`,
+            pin: true,
+            scrub: isMobileViewport ? 1.1 : 1.2,
+          },
+        });
+
+        processFlowTimeline
+          .to({}, { duration: 0.08 })
+          .to(processFlowTrackRef.current, { xPercent: processFlowMaxShiftPercent, ease: "none", duration: 0.86 })
+          .to({}, { duration: 0.08 });
+      }
     });
 
     return () => {
