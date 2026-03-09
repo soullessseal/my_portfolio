@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Noto_Sans } from "next/font/google";
 
+import AppFooter from "@/components/sections/AppFooter";
 import AppMobileBottomBar from "@/components/sections/AppMobileBottomBar";
 import AppSharedHeader from "@/components/sections/AppSharedHeader";
 import { buildSanityImageUrl } from "@/sanity/lib/image";
@@ -51,6 +52,7 @@ export default async function RootLayout({
         <AppSharedHeader />
         {children}
         {modal}
+        <AppFooter />
         <AppMobileBottomBar bottomButtons={siteAssets?.bottomButtons} />
         <SanityLive />
       </body>

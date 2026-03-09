@@ -11,16 +11,18 @@ type HomePageProps = {
 };
 
 export default function HomePage({ siteAssets }: HomePageProps) {
+  const year = new Date().getFullYear();
+
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <main
-      className="relative min-h-screen min-w-[320px] overflow-x-hidden bg-primary text-word1"
+      className="relative min-h-0 min-w-[320px] overflow-x-hidden bg-primary text-word1"
       id="top"
     >
-      <div className="hidden min-h-screen w-full lg:block">
+      <div className="hidden min-h-[calc(100dvh-40px)] w-full lg:block">
         <div className="h-[72px]" />
         <HomeHeroSection device="pc" hero={siteAssets?.hero} />
         <div className="mx-auto mt-[32px] w-full max-w-[1440px]">
@@ -32,11 +34,14 @@ export default function HomePage({ siteAssets }: HomePageProps) {
         </div>
       </div>
 
-      <div className="min-h-screen w-full pb-[72px] lg:hidden">
+      <div className="min-h-[calc(100dvh-82px)] w-full pb-0 lg:hidden">
         <div className="h-[calc(54px_+_env(safe-area-inset-top))]" />
         <HomeHeroSection device="mb" hero={siteAssets?.hero} />
         <div className="mx-auto mt-[16px] w-full">
           <HomeNavSection device="mb" navigationButtons={siteAssets?.navigationButtons} />
+        </div>
+        <div className="mt-3 border-t border-primary bg-primary/95 px-4 py-2 text-center text-[11px] text-word2">
+          <p>Copyright © {year} Betty. All rights reserved.</p>
         </div>
       </div>
 
