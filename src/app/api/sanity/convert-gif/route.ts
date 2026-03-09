@@ -458,5 +458,5 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  return Response.json({ ok: true, route: "convert-gif", expects: "POST webhook with Sanity signature" });
-}
+  return new Response("Method Not Allowed", { status: 405 });
+} //故意打這樣避免被看到GET接口，因為這個接口是給Sanity Webhook用的，不應該被外部訪問。
