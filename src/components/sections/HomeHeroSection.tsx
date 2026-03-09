@@ -1,0 +1,166 @@
+import Image from "next/image";
+import TagButton from "../ui/TagButton";
+
+type HomeHeroSectionProps = {
+  device?: "mb" | "pc";
+  className?: string;
+};
+
+const HERO_IMAGE_SRC = "/figma-assets/3454bfe3a680a7d767f46d5fd8f004a9b8dae2d4.png";
+const DESIGNER_LOCKUP_SRC = {
+  mb: "/figma-assets/9614435c0823117f7af970609a08bc8955c816f2.svg",
+  pc: "/figma-assets/79a1e8896d9d708b008360c67a9406a8b625ada1.svg",
+} as const;
+
+const DEVICE_CONFIG = {
+  mb: {
+    sectionNodeId: "360:273",
+    imageNodeId: "799:1058",
+    tagsNodeId: "354:87",
+    firstTagNodeId: "360:264",
+    secondTagNodeId: "360:267",
+    introNodeId: "377:251",
+    introTextNodeId: "361:315",
+    designerNodeId: "978:523",
+    outerClass:
+      "h-[180px] w-full min-[360px]:h-[clamp(180px,calc(180px_+_(100vw_-_360px)_/_4),340px)]",
+    innerClass:
+      "relative mx-auto flex h-full w-full flex-col items-start justify-between px-[24px] pt-[8px] md:px-[48px]",
+    tagsGapClassName:
+      "gap-[4px] min-[360px]:gap-[clamp(4px,calc(4px_+_(100vw_-_360px)_/_40),10px)]",
+    introGapClassName:
+      "gap-[8px] min-[360px]:gap-[clamp(8px,calc(8px_+_(100vw_-_360px)_/_28),20px)]",
+    imageWrapperClassName:
+      "absolute right-0 top-0 h-full w-[360px] min-[360px]:w-[clamp(360px,calc(360px_+_(100vw_-_360px)_/_2),680px)]",
+    imageWrapperStyle: {
+      right: "max(0px, calc((100vw - 560px) / 2))",
+    },
+    imageClassName:
+      "absolute left-[-2.3%] top-[-97.51%] h-[226.63%] w-[169.89%] max-w-none min-[480px]:top-[-72%] min-[480px]:h-[210%] min-[768px]:left-[6%]",
+    introTextClassName:
+      "w-full text-mb-h5 text-word2-50 md:!font-bold md:![font-size:16px] md:![line-height:1.25] md:![font-family:var(--font-pc-h5-family)]",
+    designerClassName:
+      "h-[29.44px] w-[204.83px] min-[360px]:h-[clamp(29.44px,calc(29.44px_+_(100vw_-_360px)_/_12),47.1px)] min-[360px]:w-[clamp(204.83px,calc(204.83px_+_(100vw_-_360px)_/_4.3),327.73px)]",
+    tagVariant: "mb" as const,
+  },
+  pc: {
+    sectionNodeId: "799:1308",
+    imageNodeId: "801:449",
+    tagsNodeId: "799:1310",
+    firstTagNodeId: "799:1311",
+    secondTagNodeId: "799:1312",
+    introNodeId: "799:1313",
+    introTextNodeId: "799:1314",
+    designerNodeId: "978:522",
+    outerClass: "h-[360px] w-full",
+    innerClass:
+      "relative mx-auto flex h-full w-full max-w-[1440px] flex-col items-start justify-between px-[48px] pt-[24px] pb-[24px]",
+    tagsGapClassName: "gap-[8px]",
+    introGapClassName: "gap-[16px]",
+    imageWrapperClassName: "absolute right-0 top-0 h-[360px] w-[719px]",
+    imageWrapperStyle: {
+      right: "max(0px, calc((100vw - 1440px) / 2))",
+    },
+    imageClassName:
+      "absolute left-[-48.07%] top-[-140.83%] h-[302.59%] w-[226.83%] max-w-none",
+    introTextClassName: "w-full max-w-[928px] text-pc-h5 text-word2-50",
+    designerClassName: "h-[47.104px] w-[327.729px]",
+    tagVariant: "pc" as const,
+  },
+} as const;
+
+export default function HomeHeroSection({
+  device = "mb",
+  className,
+}: HomeHeroSectionProps) {
+  const config = DEVICE_CONFIG[device];
+
+  return (
+    <section
+      className={[
+        "relative overflow-hidden bg-linear-to-b from-secondary from-[20%] to-primary to-[60%]",
+        config.outerClass,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      data-name="Section_Hero"
+      data-node-id={config.sectionNodeId}
+      data-device={device}
+    >
+      <div
+        className={config.imageWrapperClassName}
+        style={
+          "imageWrapperStyle" in config ? config.imageWrapperStyle : undefined
+        }
+        data-name="Section_Hero Pic"
+        data-node-id={config.imageNodeId}
+      >
+        <Image
+          alt=""
+          src={HERO_IMAGE_SRC}
+          width={1871}
+          height={1206}
+          className={config.imageClassName}
+          priority
+        />
+      </div>
+
+      <div className={config.innerClass}>
+        <div
+          className={[
+            "relative z-10 flex items-center",
+            config.tagsGapClassName,
+          ].join(" ")}
+          data-name="Tag"
+          data-node-id={config.tagsNodeId}
+        >
+          <TagButton
+            variant={config.tagVariant}
+            label="互動原型設計"
+            className="md:min-h-[28px] md:[&>span]:!font-normal md:[&>span]:![font-size:16px] md:[&>span]:![line-height:1.25] md:[&>span]:![font-family:var(--font-pc-tag-family)]"
+            dataNodeId={config.firstTagNodeId}
+          />
+          <TagButton
+            variant={config.tagVariant}
+            label="視覺設計"
+            className="md:min-h-[28px] md:[&>span]:!font-normal md:[&>span]:![font-size:16px] md:[&>span]:![line-height:1.25] md:[&>span]:![font-family:var(--font-pc-tag-family)]"
+            dataNodeId={config.secondTagNodeId}
+          />
+        </div>
+
+        <div
+          className={[
+            "relative z-10 flex flex-col items-start",
+            config.introGapClassName,
+          ].join(" ")}
+          data-name="Intro"
+          data-node-id={config.introNodeId}
+        >
+          <p
+            className={config.introTextClassName}
+            data-node-id={config.introTextNodeId}
+          >
+            <span>嗨，</span>
+            <span className="text-highlight">
+              我是Betty！
+              <br />
+              正在累積UI/UX能力的平面設計師。
+            </span>
+            <br />
+            <span>希望結合視覺與體驗，做出更好的設計。</span>
+          </p>
+          <Image
+            alt="DESIGNER"
+            src={DESIGNER_LOCKUP_SRC[device]}
+            width={device === "mb" ? 205 : 328}
+            height={device === "mb" ? 30 : 47}
+            className={config.designerClassName}
+            data-name="Union"
+            data-node-id={config.designerNodeId}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}

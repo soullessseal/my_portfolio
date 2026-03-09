@@ -1,0 +1,488 @@
+@import "tailwindcss";
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
+
+/* === DESIGN TOKENS: BEGIN (AUTO-GENERATED) === */
+
+:root {
+  --font-design-sans: var(--font-noto-sans), sans-serif;
+  --font-sans: var(--font-design-sans);
+
+  --color-my-ui-color-system-primary: #ffffff;
+  --color-my-ui-color-system-primary-85: rgba(255, 255, 255, 0.85);
+  --color-primary-85: var(--color-my-ui-color-system-primary-85);
+  --color-my-ui-color-system-primary-50: rgba(255, 255, 255, 0.5);
+  --color-my-ui-color-system-primary-0: rgba(255, 255, 255, 0);
+  --color-my-ui-color-system-secondary: #c9c0bb;
+  --color-my-ui-color-system-secondary-50: rgba(201, 192, 187, 0.5);
+  --color-my-ui-color-system-highlight: #bf9162;
+  --color-my-ui-color-system-highlight-50: rgba(191, 145, 98, 0.5);
+  --color-my-ui-color-system-black: #000000;
+  --color-my-ui-color-system-black-50: rgba(0, 0, 0, 0.5);
+  --color-my-ui-color-system-word1: #6d6d71;
+  --color-my-ui-color-system-word1-50: rgba(109, 109, 113, 0.5);
+  --color-my-ui-color-system-word2: #51473f;
+  --color-my-ui-color-system-word2-50: rgba(81, 71, 63, 0.5);
+
+  --font-mb-h1-family: var(--font-design-sans);
+  --font-mb-h1-weight: 700;
+  --font-mb-h1-size: 16px;
+  --font-mb-h1-line-height: 1.25;
+  --font-mb-h1-letter-spacing: 0px;
+
+  --font-mb-h2-family: var(--font-design-sans);
+  --font-mb-h2-weight: 700;
+  --font-mb-h2-size: 14px;
+  --font-mb-h2-line-height: 1.25;
+  --font-mb-h2-letter-spacing: 0px;
+
+  --font-mb-h3-family: var(--font-design-sans);
+  --font-mb-h3-weight: 500;
+  --font-mb-h3-size: 12px;
+  --font-mb-h3-line-height: 1.25;
+  --font-mb-h3-letter-spacing: 0px;
+
+  --font-mb-h4-family: var(--font-design-sans);
+  --font-mb-h4-weight: 400;
+  --font-mb-h4-size: 12px;
+  --font-mb-h4-line-height: 1.5;
+  --font-mb-h4-letter-spacing: 0px;
+
+  --font-mb-h5-family: var(--font-design-sans);
+  --font-mb-h5-weight: 700;
+  --font-mb-h5-size: 10px;
+  --font-mb-h5-line-height: 1.25;
+  --font-mb-h5-letter-spacing: 0px;
+
+  --font-mb-nav-family: var(--font-design-sans);
+  --font-mb-nav-weight: 500;
+  --font-mb-nav-size: 10px;
+  --font-mb-nav-line-height: 1.25;
+  --font-mb-nav-letter-spacing: 0px;
+
+  --font-mb-tag-family: var(--font-design-sans);
+  --font-mb-tag-weight: 400;
+  --font-mb-tag-size: 10px;
+  --font-mb-tag-line-height: 1.25;
+  --font-mb-tag-letter-spacing: 0px;
+
+  --font-mb-work-family: var(--font-design-sans);
+  --font-mb-work-weight: 500;
+  --font-mb-work-size: 14px;
+  --font-mb-work-line-height: 1.25;
+  --font-mb-work-letter-spacing: 0px;
+
+  --font-pc-h1-family: var(--font-design-sans);
+  --font-pc-h1-weight: 700;
+  --font-pc-h1-size: 24px;
+  --font-pc-h1-line-height: 1.25;
+  --font-pc-h1-letter-spacing: 0px;
+
+  --font-pc-h2-family: var(--font-design-sans);
+  --font-pc-h2-weight: 700;
+  --font-pc-h2-size: 20px;
+  --font-pc-h2-line-height: 1.25;
+  --font-pc-h2-letter-spacing: 0px;
+
+  --font-pc-h3-family: var(--font-design-sans);
+  --font-pc-h3-weight: 500;
+  --font-pc-h3-size: 18px;
+  --font-pc-h3-line-height: 1.25;
+  --font-pc-h3-letter-spacing: 0px;
+
+  --font-pc-h4-family: var(--font-design-sans);
+  --font-pc-h4-weight: 400;
+  --font-pc-h4-size: 18px;
+  --font-pc-h4-line-height: 1.5;
+  --font-pc-h4-letter-spacing: 0px;
+
+  --font-pc-h5-family: var(--font-design-sans);
+  --font-pc-h5-weight: 700;
+  --font-pc-h5-size: 16px;
+  --font-pc-h5-line-height: 1.25;
+  --font-pc-h5-letter-spacing: 0px;
+
+  --font-pc-nav-family: var(--font-design-sans);
+  --font-pc-nav-weight: 500;
+  --font-pc-nav-size: 16px;
+  --font-pc-nav-line-height: 1.25;
+  --font-pc-nav-letter-spacing: 0px;
+
+  --font-pc-tag-family: var(--font-design-sans);
+  --font-pc-tag-weight: 400;
+  --font-pc-tag-size: 16px;
+  --font-pc-tag-line-height: 1.25;
+  --font-pc-tag-letter-spacing: 0px;
+
+  --font-pc-work-family: var(--font-design-sans);
+  --font-pc-work-weight: 500;
+  --font-pc-work-size: 20px;
+  --font-pc-work-line-height: 1.25;
+  --font-pc-work-letter-spacing: 0px;
+}
+
+@theme {
+  --color-primary: var(--color-my-ui-color-system-primary);
+  --color-primary-50: var(--color-my-ui-color-system-primary-50);
+  --color-primary-0: var(--color-my-ui-color-system-primary-0);
+  --color-secondary: var(--color-my-ui-color-system-secondary);
+  --color-secondary-50: var(--color-my-ui-color-system-secondary-50);
+  --color-highlight: var(--color-my-ui-color-system-highlight);
+  --color-highlight-50: var(--color-my-ui-color-system-highlight-50);
+  --color-black: var(--color-my-ui-color-system-black);
+  --color-black-50: var(--color-my-ui-color-system-black-50);
+  --color-word1: var(--color-my-ui-color-system-word1);
+  --color-word1-50: var(--color-my-ui-color-system-word1-50);
+  --color-word2: var(--color-my-ui-color-system-word2);
+  --color-word2-50: var(--color-my-ui-color-system-word2-50);
+}
+
+@layer utilities {
+  .text-mb-h1 {
+    font-family: var(--font-mb-h1-family);
+    font-weight: var(--font-mb-h1-weight);
+    font-size: var(--font-mb-h1-size);
+    line-height: var(--font-mb-h1-line-height);
+    letter-spacing: var(--font-mb-h1-letter-spacing);
+  }
+
+  .text-mb-h2 {
+    font-family: var(--font-mb-h2-family);
+    font-weight: var(--font-mb-h2-weight);
+    font-size: var(--font-mb-h2-size);
+    line-height: var(--font-mb-h2-line-height);
+    letter-spacing: var(--font-mb-h2-letter-spacing);
+  }
+
+  .text-mb-h3 {
+    font-family: var(--font-mb-h3-family);
+    font-weight: var(--font-mb-h3-weight);
+    font-size: var(--font-mb-h3-size);
+    line-height: var(--font-mb-h3-line-height);
+    letter-spacing: var(--font-mb-h3-letter-spacing);
+  }
+
+  .text-mb-h4 {
+    font-family: var(--font-mb-h4-family);
+    font-weight: var(--font-mb-h4-weight);
+    font-size: var(--font-mb-h4-size);
+    line-height: var(--font-mb-h4-line-height);
+    letter-spacing: var(--font-mb-h4-letter-spacing);
+  }
+
+  .text-mb-h5 {
+    font-family: var(--font-mb-h5-family);
+    font-weight: var(--font-mb-h5-weight);
+    font-size: var(--font-mb-h5-size);
+    line-height: var(--font-mb-h5-line-height);
+    letter-spacing: var(--font-mb-h5-letter-spacing);
+  }
+
+  .text-mb-nav {
+    font-family: var(--font-mb-nav-family);
+    font-weight: var(--font-mb-nav-weight);
+    font-size: var(--font-mb-nav-size);
+    line-height: var(--font-mb-nav-line-height);
+    letter-spacing: var(--font-mb-nav-letter-spacing);
+  }
+
+  .text-mb-tag {
+    font-family: var(--font-mb-tag-family);
+    font-weight: var(--font-mb-tag-weight);
+    font-size: var(--font-mb-tag-size);
+    line-height: var(--font-mb-tag-line-height);
+    letter-spacing: var(--font-mb-tag-letter-spacing);
+  }
+
+  .text-mb-work {
+    font-family: var(--font-mb-work-family);
+    font-weight: var(--font-mb-work-weight);
+    font-size: var(--font-mb-work-size);
+    line-height: var(--font-mb-work-line-height);
+    letter-spacing: var(--font-mb-work-letter-spacing);
+  }
+
+  .text-pc-h1 {
+    font-family: var(--font-pc-h1-family);
+    font-weight: var(--font-pc-h1-weight);
+    font-size: var(--font-pc-h1-size);
+    line-height: var(--font-pc-h1-line-height);
+    letter-spacing: var(--font-pc-h1-letter-spacing);
+  }
+
+  .text-pc-h2 {
+    font-family: var(--font-pc-h2-family);
+    font-weight: var(--font-pc-h2-weight);
+    font-size: var(--font-pc-h2-size);
+    line-height: var(--font-pc-h2-line-height);
+    letter-spacing: var(--font-pc-h2-letter-spacing);
+  }
+
+  .text-pc-h3 {
+    font-family: var(--font-pc-h3-family);
+    font-weight: var(--font-pc-h3-weight);
+    font-size: var(--font-pc-h3-size);
+    line-height: var(--font-pc-h3-line-height);
+    letter-spacing: var(--font-pc-h3-letter-spacing);
+  }
+
+  .text-pc-h4 {
+    font-family: var(--font-pc-h4-family);
+    font-weight: var(--font-pc-h4-weight);
+    font-size: var(--font-pc-h4-size);
+    line-height: var(--font-pc-h4-line-height);
+    letter-spacing: var(--font-pc-h4-letter-spacing);
+  }
+
+  .text-pc-h5 {
+    font-family: var(--font-pc-h5-family);
+    font-weight: var(--font-pc-h5-weight);
+    font-size: var(--font-pc-h5-size);
+    line-height: var(--font-pc-h5-line-height);
+    letter-spacing: var(--font-pc-h5-letter-spacing);
+  }
+
+  .text-pc-nav {
+    font-family: var(--font-pc-nav-family);
+    font-weight: var(--font-pc-nav-weight);
+    font-size: var(--font-pc-nav-size);
+    line-height: var(--font-pc-nav-line-height);
+    letter-spacing: var(--font-pc-nav-letter-spacing);
+  }
+
+  .text-pc-tag {
+    font-family: var(--font-pc-tag-family);
+    font-weight: var(--font-pc-tag-weight);
+    font-size: var(--font-pc-tag-size);
+    line-height: var(--font-pc-tag-line-height);
+    letter-spacing: var(--font-pc-tag-letter-spacing);
+  }
+
+  .text-pc-work {
+    font-family: var(--font-pc-work-family);
+    font-weight: var(--font-pc-work-weight);
+    font-size: var(--font-pc-work-size);
+    line-height: var(--font-pc-work-line-height);
+    letter-spacing: var(--font-pc-work-letter-spacing);
+  }
+
+  .text-h1 {
+    font-family: var(--font-mb-h1-family);
+    font-weight: var(--font-mb-h1-weight);
+    font-size: var(--font-mb-h1-size);
+    line-height: var(--font-mb-h1-line-height);
+    letter-spacing: var(--font-mb-h1-letter-spacing);
+  }
+
+  .text-h2 {
+    font-family: var(--font-mb-h2-family);
+    font-weight: var(--font-mb-h2-weight);
+    font-size: var(--font-mb-h2-size);
+    line-height: var(--font-mb-h2-line-height);
+    letter-spacing: var(--font-mb-h2-letter-spacing);
+  }
+
+  .text-h3 {
+    font-family: var(--font-mb-h3-family);
+    font-weight: var(--font-mb-h3-weight);
+    font-size: var(--font-mb-h3-size);
+    line-height: var(--font-mb-h3-line-height);
+    letter-spacing: var(--font-mb-h3-letter-spacing);
+  }
+
+  .text-h4 {
+    font-family: var(--font-mb-h4-family);
+    font-weight: var(--font-mb-h4-weight);
+    font-size: var(--font-mb-h4-size);
+    line-height: var(--font-mb-h4-line-height);
+    letter-spacing: var(--font-mb-h4-letter-spacing);
+  }
+
+  .text-h5 {
+    font-family: var(--font-mb-h5-family);
+    font-weight: var(--font-mb-h5-weight);
+    font-size: var(--font-mb-h5-size);
+    line-height: var(--font-mb-h5-line-height);
+    letter-spacing: var(--font-mb-h5-letter-spacing);
+  }
+
+  .text-nav {
+    font-family: var(--font-mb-nav-family);
+    font-weight: var(--font-mb-nav-weight);
+    font-size: var(--font-mb-nav-size);
+    line-height: var(--font-mb-nav-line-height);
+    letter-spacing: var(--font-mb-nav-letter-spacing);
+  }
+
+  .text-tag {
+    font-family: var(--font-mb-tag-family);
+    font-weight: var(--font-mb-tag-weight);
+    font-size: var(--font-mb-tag-size);
+    line-height: var(--font-mb-tag-line-height);
+    letter-spacing: var(--font-mb-tag-letter-spacing);
+  }
+
+  .text-work {
+    font-family: var(--font-mb-work-family);
+    font-weight: var(--font-mb-work-weight);
+    font-size: var(--font-mb-work-size);
+    line-height: var(--font-mb-work-line-height);
+    letter-spacing: var(--font-mb-work-letter-spacing);
+  }
+
+  .text-gsap-hero-title {
+    font-family: var(--font-design-sans);
+    font-weight: 700;
+    font-size: clamp(24px, 4.2vw, 62px);
+    line-height: 1;
+    letter-spacing: 20px;
+  }
+
+  @media (max-width: 767px) {
+    .text-gsap-hero-title-mobile {
+      font-size: clamp(16px, 4.6vw, 22px);
+      line-height: 1.1;
+    }
+  }
+
+  .text-gsap-hero-title-zh {
+    font-family: var(--font-design-sans);
+    font-weight: 700;
+    font-size: clamp(34px, 5.8vw, 80px);
+    line-height: 1;
+    letter-spacing: 20px;
+  }
+
+  .text-gsap-section-title {
+    font-family: var(--font-design-sans);
+    font-weight: 700;
+    font-size: clamp(24px, 3.8vw, 52px);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .text-gsap-goal-number {
+    font-family: var(--font-design-sans);
+    font-weight: 700;
+    font-size: clamp(72px, 10vw, 160px);
+    line-height: 0.82;
+    letter-spacing: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-family: var(--font-pc-h1-family);
+      font-weight: var(--font-pc-h1-weight);
+      font-size: var(--font-pc-h1-size);
+      line-height: var(--font-pc-h1-line-height);
+      letter-spacing: var(--font-pc-h1-letter-spacing);
+    }
+
+    .text-h2 {
+      font-family: var(--font-pc-h2-family);
+      font-weight: var(--font-pc-h2-weight);
+      font-size: var(--font-pc-h2-size);
+      line-height: var(--font-pc-h2-line-height);
+      letter-spacing: var(--font-pc-h2-letter-spacing);
+    }
+
+    .text-h3 {
+      font-family: var(--font-pc-h3-family);
+      font-weight: var(--font-pc-h3-weight);
+      font-size: var(--font-pc-h3-size);
+      line-height: var(--font-pc-h3-line-height);
+      letter-spacing: var(--font-pc-h3-letter-spacing);
+    }
+
+    .text-h4 {
+      font-family: var(--font-pc-h4-family);
+      font-weight: var(--font-pc-h4-weight);
+      font-size: var(--font-pc-h4-size);
+      line-height: var(--font-pc-h4-line-height);
+      letter-spacing: var(--font-pc-h4-letter-spacing);
+    }
+
+    .text-h5 {
+      font-family: var(--font-pc-h5-family);
+      font-weight: var(--font-pc-h5-weight);
+      font-size: var(--font-pc-h5-size);
+      line-height: var(--font-pc-h5-line-height);
+      letter-spacing: var(--font-pc-h5-letter-spacing);
+    }
+
+    .text-nav {
+      font-family: var(--font-pc-nav-family);
+      font-weight: var(--font-pc-nav-weight);
+      font-size: var(--font-pc-nav-size);
+      line-height: var(--font-pc-nav-line-height);
+      letter-spacing: var(--font-pc-nav-letter-spacing);
+    }
+
+    .text-tag {
+      font-family: var(--font-pc-tag-family);
+      font-weight: var(--font-pc-tag-weight);
+      font-size: var(--font-pc-tag-size);
+      line-height: var(--font-pc-tag-line-height);
+      letter-spacing: var(--font-pc-tag-letter-spacing);
+    }
+
+    .text-work {
+      font-family: var(--font-pc-work-family);
+      font-weight: var(--font-pc-work-weight);
+      font-size: var(--font-pc-work-size);
+      line-height: var(--font-pc-work-line-height);
+      letter-spacing: var(--font-pc-work-letter-spacing);
+    }
+  }
+}
+
+/* === DESIGN TOKENS: END (AUTO-GENERATED) === */
+
+body {
+  background: var(--color-primary);
+  color: var(--color-word1);
+  font-family: var(--font-noto-sans), sans-serif;
+}
+
+@media (min-width: 1024px) {
+  html,
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .hide-scrollbar-desktop {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar-desktop::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+
+.artwork-gallery-grid-pc {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (min-width: 1344px) {
+  .artwork-gallery-grid-pc {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+
