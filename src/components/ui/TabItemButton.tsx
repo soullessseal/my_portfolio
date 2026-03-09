@@ -72,10 +72,11 @@ export default function TabItemButton({
   return (
     <button
       type="button"
+      role="tab"
       data-device={device}
       data-state={state}
-      aria-pressed={isMb ? state === "pressed" : undefined}
       aria-selected={state === "active"}
+      tabIndex={state === "active" ? 0 : -1}
       onClick={onClick}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
