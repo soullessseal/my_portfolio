@@ -28,6 +28,7 @@ const DEVICE_CONFIG = {
     dataNodeId: "408:60",
     resumeNodeId: "368:243",
     resumeSlotClass: "flex w-[72px] shrink-0 justify-end",
+    navWrapperClass: "",
   },
   pc: {
     outerClass:

@@ -308,7 +308,7 @@ function StrategyMedia({
     return (
       <CmsImage
         image={cmsImage}
-        alt={image.alt || alt}
+        alt={image?.alt || alt}
         width={1200}
         sizes="(min-width: 768px) 36vw, 100vw"
         className="h-full w-full object-cover"
@@ -684,7 +684,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       {getFeaturedImage(heroImage) ? (
                         <CmsImage
                           image={getFeaturedImage(heroImage)}
-                          alt={heroImage.alt || detail.heroAlt}
+                          alt={heroImage?.alt || detail.heroAlt}
                           width={1800}
                           sizes="100vw"
                           maxWidth={1800}
