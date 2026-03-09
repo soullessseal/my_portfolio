@@ -1,15 +1,19 @@
+import type { SiteAssets } from "@/sanity/lib/queries";
+
 import ToolBar from "./ToolBar";
 
 type SectionToolProps = {
   device?: "mb" | "pc";
   title?: string;
   className?: string;
+  toolIcons?: SiteAssets["toolIcons"];
 };
 
 export default function SectionTool({
   device = "mb",
-  title = "使用工具",
+  title = "工具應用",
   className,
+  toolIcons,
 }: SectionToolProps) {
   const isPc = device === "pc";
 
@@ -36,7 +40,7 @@ export default function SectionTool({
         {title}
       </p>
 
-      <ToolBar device={device} className="w-full" />
+      <ToolBar device={device} className="w-full" toolIcons={toolIcons} />
     </section>
   );
 }

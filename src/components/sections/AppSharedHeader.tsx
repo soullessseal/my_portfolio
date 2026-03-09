@@ -8,8 +8,7 @@ export default function AppSharedHeader() {
   const pathname = usePathname();
   const isArtworkRoute = pathname === "/page-artwork" || pathname.startsWith("/page-artwork/");
   const isModalDetailRoute = pathname.startsWith("/page-artwork/projects/");
-  const shouldShowHeader =
-    pathname === "/" || pathname === "/page-about" || isArtworkRoute;
+  const shouldShowHeader = pathname === "/" || pathname === "/page-about" || isArtworkRoute;
 
   if (!shouldShowHeader) {
     return null;

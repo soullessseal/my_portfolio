@@ -1,10 +1,16 @@
 "use client";
 
+import type { SiteAssets } from "@/sanity/lib/queries";
+
 import HomeHeroSection from "../sections/HomeHeroSection";
 import HomeNavSection from "../sections/HomeNavSection";
 import ScrollTopButton from "../ui/ScrollTopButton";
 
-export default function HomePage() {
+type HomePageProps = {
+  siteAssets?: SiteAssets | null;
+};
+
+export default function HomePage({ siteAssets }: HomePageProps) {
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -16,10 +22,11 @@ export default function HomePage() {
     >
       <div className="hidden min-h-screen w-full lg:block">
         <div className="h-[72px]" />
-        <HomeHeroSection device="pc" />
+        <HomeHeroSection device="pc" hero={siteAssets?.hero} />
         <div className="mx-auto mt-[32px] w-full max-w-[1440px]">
           <HomeNavSection
             device="pc"
+            navigationButtons={siteAssets?.navigationButtons}
             className="h-[max(150px,calc(100vh_-_536px))]"
           />
         </div>
@@ -27,9 +34,9 @@ export default function HomePage() {
 
       <div className="min-h-screen w-full pb-[72px] lg:hidden">
         <div className="h-[calc(54px_+_env(safe-area-inset-top))]" />
-        <HomeHeroSection device="mb" />
+        <HomeHeroSection device="mb" hero={siteAssets?.hero} />
         <div className="mx-auto mt-[16px] w-full">
-          <HomeNavSection device="mb" />
+          <HomeNavSection device="mb" navigationButtons={siteAssets?.navigationButtons} />
         </div>
       </div>
 

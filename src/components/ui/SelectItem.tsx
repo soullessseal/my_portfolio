@@ -10,7 +10,7 @@ type SelectItemProps = {
 
 export default function SelectItem({
   active = false,
-  iconSrc = "/figma-assets/icon-a.png",
+  iconSrc = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c9c0bb'/%3E%3C/svg%3E",
   label = "Select item",
   className,
 }: SelectItemProps) {

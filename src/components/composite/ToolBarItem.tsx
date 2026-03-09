@@ -1,3 +1,5 @@
+import type { SiteAssets } from "@/sanity/lib/queries";
+
 import ToolIcon, { ToolIconName } from "../ui/ToolIcon";
 
 type ToolBarItemDevice = "mb" | "pc";
@@ -10,6 +12,7 @@ type ToolBarItemProps = {
   dataNodeId?: string;
   iconNodeId?: string;
   labelNodeId?: string;
+  toolIcons?: SiteAssets["toolIcons"];
 };
 
 export default function ToolBarItem({
@@ -20,6 +23,7 @@ export default function ToolBarItem({
   dataNodeId,
   iconNodeId,
   labelNodeId,
+  toolIcons,
 }: ToolBarItemProps) {
   const wrapperClass =
     device === "pc"
@@ -39,7 +43,7 @@ export default function ToolBarItem({
       data-node-id={dataNodeId}
       data-device={device}
     >
-      <ToolIcon icon={icon} device={device} dataNodeId={iconNodeId} />
+      <ToolIcon icon={icon} device={device} dataNodeId={iconNodeId} toolIcons={toolIcons} />
       <span
         className={["min-w-0 text-center text-word1 whitespace-nowrap", labelClass].join(" ")}
         data-node-id={labelNodeId}

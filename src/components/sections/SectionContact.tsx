@@ -1,21 +1,22 @@
-import Image from "next/image";
+import type { MigratedImage } from "@/sanity/lib/queries";
+
+import CmsImage from "../ui/CmsImage";
 import ContactButtonBar from "../composite/ContactButtonBar";
 
 type SectionContactProps = {
   device?: "mb" | "pc";
   name?: string;
-  photoSrc?: string;
+  photo?: MigratedImage;
   className?: string;
 };
 
 export default function SectionContact({
   device = "mb",
   name = "Betty",
-  photoSrc,
+  photo,
   className,
 }: SectionContactProps) {
   const isPc = device === "pc";
-  const resolvedPhotoSrc = photoSrc ?? "/figma-assets/df44b9ab7858418399884c2ee0888a64281e94ed.png";
 
   return (
     <section
@@ -35,14 +36,15 @@ export default function SectionContact({
         data-name="Photo"
         data-node-id={isPc ? "799:879" : "792:248"}
       >
-        <Image
-          src={resolvedPhotoSrc}
-          alt={name}
-          fill
-          className="rounded-[16px] object-contain"
-          sizes="152px"
-          priority={false}
-        />
+        {photo?.image ? (
+          <CmsImage
+            fill
+            image={photo.image}
+            alt={photo.alt || name}
+            sizes="152px"
+            className="rounded-[16px] object-contain"
+          />
+        ) : null}
       </div>
 
       <div
@@ -56,9 +58,7 @@ export default function SectionContact({
           data-node-id={isPc ? "799:882" : "792:251"}
         >
           <p
-            className={[isPc ? "text-pc-h1" : "text-mb-h1", "text-word2 text-center"].join(
-              " ",
-            )}
+            className={[isPc ? "text-pc-h1" : "text-mb-h1", "text-word2 text-center"].join(" ")}
             data-node-id={isPc ? "799:883" : "792:252"}
           >
             {name}

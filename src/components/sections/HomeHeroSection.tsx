@@ -1,17 +1,22 @@
 import Image from "next/image";
+
+import type { SiteAssets } from "@/sanity/lib/queries";
+
+import CmsImage from "../ui/CmsImage";
 import TagButton from "../ui/TagButton";
 
 type HomeHeroSectionProps = {
   device?: "mb" | "pc";
+  hero?: SiteAssets["hero"];
   className?: string;
 };
 
-const HERO_IMAGE_SRC = "/figma-assets/3454bfe3a680a7d767f46d5fd8f004a9b8dae2d4.png";
 const DESIGNER_LOCKUP_SRC = {
   mb: "/figma-assets/9614435c0823117f7af970609a08bc8955c816f2.svg",
   pc: "/figma-assets/79a1e8896d9d708b008360c67a9406a8b625ada1.svg",
 } as const;
 
+const FALLBACK_HERO_ALT = "Betty portfolio hero image";
 const DEVICE_CONFIG = {
   mb: {
     sectionNodeId: "360:273",
@@ -71,9 +76,11 @@ const DEVICE_CONFIG = {
 
 export default function HomeHeroSection({
   device = "mb",
+  hero,
   className,
 }: HomeHeroSectionProps) {
   const config = DEVICE_CONFIG[device];
+  const heroImage = device === "pc" ? hero?.desktopImage : hero?.mobileImage ?? hero?.desktopImage;
 
   return (
     <section
@@ -90,65 +97,59 @@ export default function HomeHeroSection({
     >
       <div
         className={config.imageWrapperClassName}
-        style={
-          "imageWrapperStyle" in config ? config.imageWrapperStyle : undefined
-        }
+        style={config.imageWrapperStyle}
         data-name="Section_Hero Pic"
         data-node-id={config.imageNodeId}
       >
-        <Image
-          alt=""
-          src={HERO_IMAGE_SRC}
-          width={1871}
-          height={1206}
-          className={config.imageClassName}
-          priority
-        />
+        {heroImage?.image ? (
+          <CmsImage
+            image={heroImage.image}
+            alt={heroImage.alt || FALLBACK_HERO_ALT}
+            width={1871}
+            height={1206}
+            sizes="100vw"
+            maxWidth={2000}
+            quality={84}
+            className={config.imageClassName}
+            priority
+          />
+        ) : null}
       </div>
 
       <div className={config.innerClass}>
         <div
-          className={[
-            "relative z-10 flex items-center",
-            config.tagsGapClassName,
-          ].join(" ")}
+          className={["relative z-10 flex items-center", config.tagsGapClassName].join(" ")}
           data-name="Tag"
           data-node-id={config.tagsNodeId}
         >
           <TagButton
             variant={config.tagVariant}
-            label="互動原型設計"
+            label="UI/UX 設計"
             className="md:min-h-[28px] md:[&>span]:!font-normal md:[&>span]:![font-size:16px] md:[&>span]:![line-height:1.25] md:[&>span]:![font-family:var(--font-pc-tag-family)]"
             dataNodeId={config.firstTagNodeId}
           />
           <TagButton
             variant={config.tagVariant}
-            label="視覺設計"
+            label="平面設計"
             className="md:min-h-[28px] md:[&>span]:!font-normal md:[&>span]:![font-size:16px] md:[&>span]:![line-height:1.25] md:[&>span]:![font-family:var(--font-pc-tag-family)]"
             dataNodeId={config.secondTagNodeId}
           />
         </div>
 
         <div
-          className={[
-            "relative z-10 flex flex-col items-start",
-            config.introGapClassName,
-          ].join(" ")}
+          className={["relative z-10 flex flex-col items-start", config.introGapClassName].join(" ")}
           data-name="Intro"
           data-node-id={config.introNodeId}
         >
-          <p
-            className={config.introTextClassName}
-            data-node-id={config.introTextNodeId}
-          >
-            <span>嗨，</span>
+          <p className={config.introTextClassName} data-node-id={config.introTextNodeId}>
+            <span>我是</span>
             <span className="text-highlight">
-              我是Betty！
+              設計師 Betty
               <br />
-              正在累積UI/UX能力的平面設計師。
+              專注於 UI/UX、網站視覺與品牌表現
             </span>
             <br />
-            <span>希望結合視覺與體驗，做出更好的設計。</span>
+            <span>透過清楚的資訊結構與細緻視覺，打造兼具體驗與辨識度的作品。</span>
           </p>
           <Image
             alt="DESIGNER"

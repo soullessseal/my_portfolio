@@ -1,8 +1,11 @@
-﻿"use client";
+"use client";
 
 import { useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import Image from "next/image";
+
+import type { SiteAssets } from "@/sanity/lib/queries";
+import { buildSanityImageUrl } from "@/sanity/lib/image";
 
 import Select from "../ui/Select";
 import SwitchButton from "../ui/SwitchButton";
@@ -12,6 +15,7 @@ type ArtworkFeaturedSectionProps = {
   device?: "mb" | "pc";
   className?: string;
   activeIndex?: number;
+  siteAssets?: SiteAssets | null;
   onChange?: (nextIndex: number) => void;
   onOpenDetail?: (project: FeaturedProjectItem) => void;
 };
@@ -25,30 +29,33 @@ export type FeaturedProjectItem = {
   tagLabels: string[];
 };
 
+const PLACEHOLDER_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c9c0bb'/%3E%3C/svg%3E";
+
 const PROJECT_ITEMS: FeaturedProjectItem[] = [
-    {
+  {
     key: "project-1",
-    selectIconSrc: "/figma-assets/icon-a.png",
+    selectIconSrc: PLACEHOLDER_IMAGE,
     selectLabel: "1",
     title: "瑞士旅遊專案",
-    imageSrc: "/figma-assets/feature-a.png",
-    tagLabels: ["平面視覺設計", "旅遊品牌"],
+    imageSrc: PLACEHOLDER_IMAGE,
+    tagLabels: ["平面設計專案", "旅遊主題"],
   },
   {
     key: "project-2",
-    selectIconSrc: "/figma-assets/icon-b.png",
+    selectIconSrc: PLACEHOLDER_IMAGE,
     selectLabel: "2",
     title: "個人作品集網站",
-    imageSrc: "/figma-assets/feature-b.png",
-    tagLabels: ["UI/UX設計", "個人網站"],
+    imageSrc: PLACEHOLDER_IMAGE,
+    tagLabels: ["UI/UX設計", "個人品牌"],
   },
   {
     key: "project-3",
-    selectIconSrc: "/figma-assets/icon-c.png",
+    selectIconSrc: PLACEHOLDER_IMAGE,
     selectLabel: "3",
     title: "印度朝聖海外網專案",
-    imageSrc: "/figma-assets/feature-c-mobile.png",
-    tagLabels: ["UI視覺設計", "朝聖品牌"],
+    imageSrc: PLACEHOLDER_IMAGE,
+    tagLabels: ["UI設計專案", "海外主題"],
   },
 ] as const;
 
@@ -66,9 +73,11 @@ const DEVICE_CONFIG = {
     contentClass: "gap-[8px]",
     contentTitleClass: "text-work text-word1",
     showcaseShellClass: "w-full justify-center gap-[4px]",
-    showcaseFrameClass: "h-[180px] w-[216px] shrink-0 overflow-hidden rounded-[16px] px-0 py-[8px] md:h-[280px] md:w-[336px]",
-    showcaseImageClass: "h-[180px] w-[216px] max-w-none object-cover md:h-[280px] md:w-[336px]",
-    showcaseImageWrapperClass: "absolute inset-0 overflow-hidden rounded-[16px] flex justify-center",
+    showcaseFrameClass:
+      "h-[180px] w-[216px] shrink-0 overflow-hidden rounded-[16px] px-0 py-[8px] md:h-[280px] md:w-[336px]",
+    showcaseImageClass:
+      "h-[180px] w-[216px] max-w-none object-cover md:h-[280px] md:w-[336px]",
+    showcaseImageWrapperClass: "absolute inset-0 flex justify-center overflow-hidden rounded-[16px]",
     tagVariant: "mb" as const,
   },
   pc: {
@@ -91,26 +100,52 @@ const DEVICE_CONFIG = {
   },
 } as const;
 
+function resolveProjects(siteAssets?: SiteAssets | null) {
+  return PROJECT_ITEMS.map((item) => {
+    const heroImage = siteAssets?.featuredDetails
+      ?.find((detail) => detail.projectKey === item.key)
+      ?.images?.find((image) => image.caption === "hero");
+    const selectIcon = siteAssets?.selectIcons?.find((icon) => icon.key === item.key);
+
+    const imageSrc =
+      buildSanityImageUrl(heroImage?.image, { width: 1200, quality: 78 }) ||
+      (heroImage?._type === "featuredImageAsset" && heroImage.asset?.url) ||
+      item.imageSrc;
+    const selectIconSrc =
+      buildSanityImageUrl(selectIcon?.imageItem?.image, { width: 120, quality: 82 }) ||
+      item.selectIconSrc;
+
+    return {
+      ...item,
+      imageSrc,
+      selectIconSrc,
+      selectLabel: selectIcon?.label || item.selectLabel,
+    };
+  });
+}
+
 export default function ArtworkFeaturedSection({
   device = "mb",
   className,
   activeIndex = 1,
+  siteAssets,
   onChange,
   onOpenDetail,
 }: ArtworkFeaturedSectionProps) {
   const config = DEVICE_CONFIG[device];
-  const activeProject = PROJECT_ITEMS[activeIndex];
+  const projects = resolveProjects(siteAssets);
+  const activeProject = projects[activeIndex];
   const dragStartXRef = useRef<number | null>(null);
   const dragTriggeredRef = useRef(false);
   const draggedRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePrev = () => {
-    onChange?.((activeIndex - 1 + PROJECT_ITEMS.length) % PROJECT_ITEMS.length);
+    onChange?.((activeIndex - 1 + projects.length) % projects.length);
   };
 
   const handleNext = () => {
-    onChange?.((activeIndex + 1) % PROJECT_ITEMS.length);
+    onChange?.((activeIndex + 1) % projects.length);
   };
 
   const handlePointerDown = (clientX: number) => {
@@ -121,9 +156,7 @@ export default function ArtworkFeaturedSection({
   };
 
   const handlePointerMove = (clientX: number) => {
-    if (dragStartXRef.current === null || dragTriggeredRef.current) {
-      return;
-    }
+    if (dragStartXRef.current === null || dragTriggeredRef.current) return;
 
     const deltaX = clientX - dragStartXRef.current;
     const threshold = 40;
@@ -170,7 +203,7 @@ export default function ArtworkFeaturedSection({
           精選作品
         </h2>
         <Select
-          items={PROJECT_ITEMS.map((item) => ({
+          items={projects.map((item) => ({
             iconSrc: item.selectIconSrc,
             label: item.selectLabel,
           }))}
@@ -190,19 +223,11 @@ export default function ArtworkFeaturedSection({
         </p>
 
         <div
-          className={[
-            "relative flex items-center justify-center",
-            config.showcaseShellClass,
-          ].join(" ")}
+          className={["relative flex items-center justify-center", config.showcaseShellClass].join(" ")}
           data-name="Section_Showcase"
           data-node-id={config.showcaseNodeId}
         >
-          <SwitchButton
-            device={device}
-            direction="left"
-            className="shrink-0"
-            onClick={handlePrev}
-          />
+          <SwitchButton device={device} direction="left" className="shrink-0" onClick={handlePrev} />
 
           <div
             className={[
@@ -240,33 +265,16 @@ export default function ArtworkFeaturedSection({
             data-name="Showcase"
             data-node-id={config.showcaseImageNodeId}
           >
-            {device === "pc" ? (
-              <div className={config.showcaseImageWrapperClass}>
-                <Image
-                  alt={activeProject.title}
-                  src={activeProject.imageSrc}
-                  width={928}
-                  height={496}
-                  className={[config.showcaseImageClass, "pointer-events-none select-none"].join(
-                    " ",
-                  )}
-                  draggable={false}
-                />
-              </div>
-            ) : (
-              <div className={config.showcaseImageWrapperClass}>
-                <Image
-                  alt={activeProject.title}
-                  src={activeProject.imageSrc}
-                  width={216}
-                  height={180}
-                  className={[config.showcaseImageClass, "pointer-events-none select-none"].join(
-                    " ",
-                  )}
-                  draggable={false}
-                />
-              </div>
-            )}
+            <div className={config.showcaseImageWrapperClass}>
+              <Image
+                alt={activeProject.title}
+                src={activeProject.imageSrc}
+                width={device === "pc" ? 928 : 216}
+                height={device === "pc" ? 496 : 180}
+                className={[config.showcaseImageClass, "pointer-events-none select-none"].join(" ")}
+                draggable={false}
+              />
+            </div>
 
             <TagButton
               variant={config.tagVariant}
@@ -282,15 +290,9 @@ export default function ArtworkFeaturedSection({
             />
           </div>
 
-          <SwitchButton
-            device={device}
-            direction="right"
-            className="shrink-0"
-            onClick={handleNext}
-          />
+          <SwitchButton device={device} direction="right" className="shrink-0" onClick={handleNext} />
         </div>
       </div>
     </section>
   );
 }
-

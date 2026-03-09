@@ -1,10 +1,13 @@
 import BottomNavButton from "../ui/BottomNavButton";
 
+const PLACEHOLDER_ICON = (width: number, height: number) =>
+  `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}'%3E%3Crect width='${width}' height='${height}' fill='transparent'/%3E%3C/svg%3E`;
+
 const items = [
   {
     key: "home",
     label: "首頁",
-    iconSrc: "/figma-assets/bottom-nav-home.svg",
+    iconSrc: PLACEHOLDER_ICON(30, 25),
     iconWidth: 30.083,
     iconHeight: 24.517,
     contentClassName: "pt-[7.32px]",
@@ -13,7 +16,7 @@ const items = [
   {
     key: "gallery",
     label: "設計作品",
-    iconSrc: "/figma-assets/bottom-nav-gallery.svg",
+    iconSrc: PLACEHOLDER_ICON(26, 23),
     iconWidth: 26.133,
     iconHeight: 23,
     contentClassName: "pt-[9px]",
@@ -22,7 +25,7 @@ const items = [
   {
     key: "about",
     label: "關於我",
-    iconSrc: "/figma-assets/bottom-nav-about.svg",
+    iconSrc: PLACEHOLDER_ICON(18, 24),
     iconWidth: 18.402,
     iconHeight: 23.834,
     contentClassName: "pt-[8px]",
@@ -37,10 +40,7 @@ export default function CompositeBottomButton({
 }) {
   return (
     <nav
-      className={[
-        "flex h-[72px] w-fit items-center gap-[12px] px-[24px] py-[8px]",
-        className,
-      ]
+      className={["flex h-[72px] w-fit items-center gap-[12px] px-[24px] py-[8px]", className]
         .filter(Boolean)
         .join(" ")}
       aria-label="Bottom navigation"

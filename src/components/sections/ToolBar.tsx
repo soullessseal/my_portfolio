@@ -1,3 +1,5 @@
+import type { SiteAssets } from "@/sanity/lib/queries";
+
 import ToolBarItem from "../composite/ToolBarItem";
 import { ToolIconName } from "../ui/ToolIcon";
 
@@ -6,6 +8,7 @@ type ToolBarDevice = "mb" | "pc";
 type ToolBarProps = {
   device?: ToolBarDevice;
   className?: string;
+  toolIcons?: SiteAssets["toolIcons"];
 };
 
 type ToolBarEntry = {
@@ -137,6 +140,7 @@ const DEVICE_CONFIG: Record<
 export default function ToolBar({
   device = "mb",
   className,
+  toolIcons,
 }: ToolBarProps) {
   const config = DEVICE_CONFIG[device];
 
@@ -155,6 +159,7 @@ export default function ToolBar({
           device={device}
           icon={item.icon}
           label={item.label}
+          toolIcons={toolIcons}
           dataNodeId={device === "pc" ? item.pcNodeId : item.mbNodeId}
           iconNodeId={device === "pc" ? item.pcIconNodeId : item.mbIconNodeId}
           labelNodeId={device === "pc" ? item.pcLabelNodeId : item.mbLabelNodeId}

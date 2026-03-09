@@ -1,5 +1,7 @@
 "use client";
 
+import type { SiteAssets } from "@/sanity/lib/queries";
+
 import SectionContact from "../sections/SectionContact";
 import SectionDesignPhilosophy from "../sections/SectionDesignPhilosophy";
 import SectionSkill from "../sections/SectionSkill";
@@ -7,7 +9,11 @@ import SectionTool from "../sections/SectionTool";
 import SectionWorkExperience from "../sections/SectionWorkExperience";
 import ScrollTopButton from "../ui/ScrollTopButton";
 
-export default function AboutPage() {
+type AboutPageProps = {
+  siteAssets?: SiteAssets | null;
+};
+
+export default function AboutPage({ siteAssets }: AboutPageProps) {
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -16,7 +22,7 @@ export default function AboutPage() {
     <main className="relative min-h-screen min-w-[320px] overflow-x-hidden bg-primary text-word1">
       <div className="hidden min-h-screen w-full lg:block">
         <div className="h-[72px]" />
-        <SectionContact device="pc" />
+        <SectionContact device="pc" photo={siteAssets?.contact?.photo} />
         <div className="mx-auto w-full max-w-[1440px]">
           <div className="mt-[48px]">
             <SectionDesignPhilosophy device="pc" />
@@ -25,7 +31,7 @@ export default function AboutPage() {
             <SectionSkill device="pc" />
           </div>
           <div className="mt-[48px]">
-            <SectionTool device="pc" />
+            <SectionTool device="pc" toolIcons={siteAssets?.toolIcons} />
           </div>
           <div className="mt-[48px] pb-[24px]">
             <SectionWorkExperience device="pc" />
@@ -35,7 +41,7 @@ export default function AboutPage() {
 
       <div className="min-h-screen w-full pb-[72px] lg:hidden">
         <div className="h-[calc(54px_+_env(safe-area-inset-top))]" />
-        <SectionContact device="mb" />
+        <SectionContact device="mb" photo={siteAssets?.contact?.photo} />
         <div className="mt-[16px]">
           <SectionDesignPhilosophy device="mb" />
         </div>
@@ -43,7 +49,7 @@ export default function AboutPage() {
           <SectionSkill device="mb" />
         </div>
         <div className="mt-[16px]">
-          <SectionTool device="mb" />
+          <SectionTool device="mb" toolIcons={siteAssets?.toolIcons} />
         </div>
         <div className="mt-[16px] pb-[22px]">
           <SectionWorkExperience device="mb" />

@@ -1,36 +1,70 @@
-﻿import NavButton from "../ui/NavButton";
+import type { Category, SiteAssets } from "@/sanity/lib/queries";
+
+import { buildSanityImageUrl } from "@/sanity/lib/image";
+
+import NavButton from "../ui/NavButton";
 
 type HomeNavSectionProps = {
   device?: "mb" | "pc";
+  navigationButtons?: SiteAssets["navigationButtons"];
   className?: string;
 };
 
-const ITEMS = [
+const PLACEHOLDER_CARD =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c9c0bb'/%3E%3C/svg%3E";
+
+const FALLBACK_ITEMS = [
   {
+    key: "uiux" as const,
     title: "UI UX 作品",
-    imageSrc: "/figma-assets/ab2403b5c5181ec4e83670f71174c601fdcc7bf6.png",
+    imageSrc: PLACEHOLDER_CARD,
     href: "/page-artwork?tab=uiux",
     mbNodeId: "387:266",
     pcNodeId: "801:433",
   },
   {
+    key: "graphic" as const,
     title: "平面設計作品",
-    imageSrc: "/figma-assets/dfba8b127039f0914c3a97b2fb80d291f46caa20.png",
+    imageSrc: PLACEHOLDER_CARD,
     href: "/page-artwork?tab=graphic",
     mbNodeId: "387:269",
     pcNodeId: "801:441",
   },
   {
+    key: "other" as const,
     title: "其他作品",
-    imageSrc: "/figma-assets/e572cd936c93effa21afdc25bbc3b5dcbefd7b8d.png",
+    imageSrc: PLACEHOLDER_CARD,
     href: "/page-artwork?tab=other",
     mbNodeId: "387:275",
     pcNodeId: "801:445",
   },
 ] as const;
 
+const itemsByKey = new Map(FALLBACK_ITEMS.map((item) => [item.key, item]));
+
+function resolveNavigationButton(
+  key: Category,
+  navigationButtons?: SiteAssets["navigationButtons"],
+) {
+  const fallback = itemsByKey.get(key)!;
+  const cmsItem = navigationButtons?.find((item) => item.key === key);
+
+  return {
+    ...fallback,
+    title: cmsItem?.title || fallback.title,
+    href: cmsItem?.href || fallback.href,
+    imageAlt: cmsItem?.imageItem?.alt || cmsItem?.title || fallback.title,
+    imageSrc:
+      buildSanityImageUrl(cmsItem?.imageItem?.image, {
+        width: 960,
+        quality: 78,
+      }) || fallback.imageSrc,
+  };
+}
+
 export default function HomeNavSection({
   device = "mb",
+  navigationButtons,
   className,
 }: HomeNavSectionProps) {
   const isPc = device === "pc";
@@ -50,18 +84,23 @@ export default function HomeNavSection({
       data-node-id={isPc ? "799:1304" : "354:69"}
       data-device={device}
     >
-      {ITEMS.map((item) => (
-        <NavButton
-          key={item.title}
-          device={device}
-          state="normal"
-          title={item.title}
-          imageSrc={item.imageSrc}
-          href={item.href}
-          className={isPc ? "min-w-0 flex-1 basis-0 h-full" : "w-full md:h-[160px]"}
-          dataNodeId={isPc ? item.pcNodeId : item.mbNodeId}
-        />
-      ))}
+      {(["uiux", "graphic", "other"] as const).map((key) => {
+        const item = resolveNavigationButton(key, navigationButtons);
+
+        return (
+          <NavButton
+            key={item.key}
+            device={device}
+            state="normal"
+            title={item.title}
+            imageSrc={item.imageSrc}
+            imageAlt={item.imageAlt}
+            href={item.href}
+            className={isPc ? "h-full min-w-0 flex-1 basis-0" : "w-full md:h-[160px]"}
+            dataNodeId={isPc ? item.pcNodeId : item.mbNodeId}
+          />
+        );
+      })}
     </section>
   );
 }

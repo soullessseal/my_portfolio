@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+import type { SiteAssets } from "@/sanity/lib/queries";
+import { buildSanityImageUrl } from "@/sanity/lib/image";
+
 import BottomNavButton from "../ui/BottomNavButton";
 
 type PageVariant = "Home" | "Gallery" | "About";
@@ -10,37 +14,47 @@ type ActiveKey = "home" | "gallery" | "about";
 type SectionBottomBarProps = {
   className?: string;
   page?: PageVariant;
+  bottomButtons?: SiteAssets["bottomButtons"];
 };
 
-const baseItems = [
+const PLACEHOLDER_ICON = (width: number, height: number) =>
+  `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}'%3E%3Crect width='${width}' height='${height}' fill='transparent'/%3E%3C/svg%3E`;
+
+const fallbackItems = [
   {
-    key: "home",
+    key: "home" as const,
     label: "首頁",
     href: "/",
-    inactiveIconSrc: "/figma-assets/bottom-nav-home.svg",
-    activeIconSrc: "/figma-assets/bottom-nav-home-active.svg",
+    inactiveIconSrc: PLACEHOLDER_ICON(30, 25),
+    activeIconSrc: PLACEHOLDER_ICON(30, 25),
+    inactiveAlt: "首頁導航按鈕",
+    activeAlt: "首頁導航按鈕",
     iconWidth: 30.083,
     iconHeight: 24.517,
     contentClassName: "pt-[7.32px]",
     dataNodeId: "I416:466;416:307",
   },
   {
-    key: "gallery",
-    label: "作品集",
+    key: "gallery" as const,
+    label: "設計作品",
     href: "/page-artwork",
-    inactiveIconSrc: "/figma-assets/bottom-nav-gallery.svg",
-    activeIconSrc: "/figma-assets/bottom-nav-gallery-active.svg",
+    inactiveIconSrc: PLACEHOLDER_ICON(26, 23),
+    activeIconSrc: PLACEHOLDER_ICON(26, 23),
+    inactiveAlt: "作品集導航按鈕",
+    activeAlt: "作品集導航按鈕",
     iconWidth: 26.133,
     iconHeight: 23,
     contentClassName: "pt-[9px]",
     dataNodeId: "I416:466;416:308",
   },
   {
-    key: "about",
+    key: "about" as const,
     label: "關於我",
     href: "/page-about",
-    inactiveIconSrc: "/figma-assets/bottom-nav-about.svg",
-    activeIconSrc: "/figma-assets/bottom-nav-about-active.svg",
+    inactiveIconSrc: PLACEHOLDER_ICON(18, 24),
+    activeIconSrc: PLACEHOLDER_ICON(18, 24),
+    inactiveAlt: "關於我導航按鈕",
+    activeAlt: "關於我導航按鈕",
     iconWidth: 18.402,
     iconHeight: 23.834,
     contentClassName: "pt-[8px]",
@@ -48,14 +62,36 @@ const baseItems = [
   },
 ] as const;
 
+function resolveBottomItem(
+  key: ActiveKey,
+  bottomButtons?: SiteAssets["bottomButtons"],
+) {
+  const fallback = fallbackItems.find((item) => item.key === key)!;
+  const cmsItem = bottomButtons?.find((item) => item.key === key);
+
+  return {
+    ...fallback,
+    label: cmsItem?.label || fallback.label,
+    href: cmsItem?.href || fallback.href,
+    inactiveIconSrc:
+      buildSanityImageUrl(cmsItem?.inactiveIcon?.image, { width: 160, quality: 82 }) ||
+      fallback.inactiveIconSrc,
+    activeIconSrc:
+      buildSanityImageUrl(cmsItem?.activeIcon?.image, { width: 160, quality: 82 }) ||
+      fallback.activeIconSrc,
+    inactiveAlt: cmsItem?.inactiveIcon?.alt || fallback.inactiveAlt,
+    activeAlt: cmsItem?.activeIcon?.alt || fallback.activeAlt,
+  };
+}
+
 export default function SectionBottomBar({
   className,
   page = "Home",
+  bottomButtons,
 }: SectionBottomBarProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const pageToKey = (value: PageVariant): ActiveKey =>
-    value.toLowerCase() as ActiveKey;
+  const pageToKey = (value: PageVariant): ActiveKey => value.toLowerCase() as ActiveKey;
   const routeActiveKey =
     pathname === "/"
       ? "home"
@@ -66,21 +102,23 @@ export default function SectionBottomBar({
           : pageToKey(page);
   const previousActiveKeyRef = useRef<ActiveKey>(routeActiveKey);
   const [activeKey, setActiveKey] = useState<ActiveKey>(routeActiveKey);
-  const [activeBackgroundDurationClass, setActiveBackgroundDurationClass] =
-    useState("duration-180");
+  const [activeBackgroundDurationClass, setActiveBackgroundDurationClass] = useState("duration-180");
   const [pressedKey, setPressedKey] = useState<ActiveKey | null>(null);
 
-  useEffect(() => {
-    baseItems.forEach((item) => {
-      router.prefetch(item.href);
-    });
-  }, [router]);
+  const items = useMemo(
+    () => (["home", "gallery", "about"] as const).map((key) => resolveBottomItem(key, bottomButtons)),
+    [bottomButtons],
+  );
 
   useEffect(() => {
-    const currentIndex = baseItems.findIndex(
-      (item) => item.key === previousActiveKeyRef.current,
-    );
-    const nextIndex = baseItems.findIndex((item) => item.key === routeActiveKey);
+    items.forEach((item) => {
+      router.prefetch(item.href);
+    });
+  }, [items, router]);
+
+  useEffect(() => {
+    const currentIndex = items.findIndex((item) => item.key === previousActiveKeyRef.current);
+    const nextIndex = items.findIndex((item) => item.key === routeActiveKey);
     const travelSteps = Math.abs(currentIndex - nextIndex);
     const frameId = window.requestAnimationFrame(() => {
       setActiveBackgroundDurationClass(travelSteps >= 2 ? "duration-280" : "duration-180");
@@ -92,9 +130,9 @@ export default function SectionBottomBar({
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [routeActiveKey]);
+  }, [items, routeActiveKey]);
 
-  const activeIndex = baseItems.findIndex((item) => item.key === activeKey);
+  const activeIndex = items.findIndex((item) => item.key === activeKey);
   const activeBackgroundWidth = "calc((100% - 72px) / 3)";
   const activeBackgroundOffset = `calc(24px + ${activeIndex} * (${activeBackgroundWidth} + 12px))`;
 
@@ -112,9 +150,7 @@ export default function SectionBottomBar({
           "backdrop-blur-[2px]",
           "transition-colors duration-300 ease-out",
           "bg-[var(--color-primary-85)]",
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        ].join(" ")}
         data-name="Background Bar"
         data-node-id="416:507"
       />
@@ -136,7 +172,7 @@ export default function SectionBottomBar({
         data-name="Composite_Bottom Button"
         data-node-id="416:466"
       >
-        {baseItems.map((item) => {
+        {items.map((item) => {
           const isActive = item.key === activeKey;
           const isPressed = !isActive && item.key === pressedKey;
           const labelClassName = isActive
@@ -154,24 +190,21 @@ export default function SectionBottomBar({
               key={item.key}
               label={item.label}
               iconSrc={isActive ? item.activeIconSrc : item.inactiveIconSrc}
+              iconAlt={isActive ? item.activeAlt : item.inactiveAlt}
               iconWidth={item.iconWidth}
               iconHeight={item.iconHeight}
               iconStyle={iconStyle}
               contentClassName={item.contentClassName}
               className={[
                 "z-10 flex-1 basis-0 transition-[background-color,box-shadow] duration-150 ease-out",
-                isPressed
-                  ? "shadow-[inset_0_1px_6px_var(--color-word1-50)]"
-                  : "",
+                isPressed ? "shadow-[inset_0_1px_6px_var(--color-word1-50)]" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
               labelClassName={labelClassName}
               dataNodeId={item.dataNodeId}
               onPointerDown={() => {
-                if (!isActive) {
-                  setPressedKey(item.key);
-                }
+                if (!isActive) setPressedKey(item.key);
               }}
               onPointerUp={() => {
                 setPressedKey((current) => (current === item.key ? null : current));
@@ -183,9 +216,7 @@ export default function SectionBottomBar({
                 setPressedKey((current) => (current === item.key ? null : current));
               }}
               onClick={() => {
-                if (pathname === item.href) {
-                  return;
-                }
+                if (pathname === item.href) return;
                 setPressedKey(null);
                 router.push(item.href);
               }}
