@@ -37,6 +37,7 @@ export default function SelectItem({
         fill
         sizes="60px"
         draggable={false}
+        onContextMenu={(event) => event.preventDefault()}
         className={[
           "absolute inset-0 block size-full object-cover",
           "transition-opacity duration-300 ease-out",

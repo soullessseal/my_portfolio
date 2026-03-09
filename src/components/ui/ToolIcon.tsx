@@ -54,7 +54,14 @@ export default function ToolIcon({
       data-name={`Icon=${icon}`}
       data-node-id={dataNodeId}
     >
-      <Image alt="" src={resolveToolIconSrc(icon, toolIcons)} fill sizes="60px" />
+      <Image
+        alt=""
+        src={resolveToolIconSrc(icon, toolIcons)}
+        fill
+        sizes="60px"
+        draggable={false}
+        onContextMenu={(event) => event.preventDefault()}
+      />
     </div>
   );
 }
