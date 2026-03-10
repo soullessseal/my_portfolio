@@ -662,7 +662,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           ScrollTrigger.refresh();
         }}
       >
-        <div className="relative h-full w-full overflow-hidden rounded-t-[22px] rounded-b-none border border-secondary-50 border-b-0 bg-primary shadow-[0px_0px_8px_var(--color-word1-50)] md:rounded-t-[26px]">
+        <div className="relative h-full w-full overflow-hidden rounded-t-[22px] rounded-b-none border border-secondary-50 border-b-0 bg-primary shadow-[0px_0px_8px_var(--color-word1-50)] [clip-path:inset(0_round_22px_22px_0_0)] md:rounded-t-[26px] md:[clip-path:inset(0_round_26px_26px_0_0)]">
           <button
             type="button"
             onClick={onClose}
