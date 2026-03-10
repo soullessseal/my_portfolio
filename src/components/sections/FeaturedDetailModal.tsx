@@ -350,14 +350,6 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
   const detail = project ? PROJECT_DETAIL_CONTENT[project.key] ?? DEFAULT_SWISS_CONTENT : DEFAULT_SWISS_CONTENT;
   const featuredImages = project ? findFeaturedSet(siteAssets, project.key)?.images : undefined;
   const heroImage = findMigratedImage(featuredImages, detail.heroCaption);
-  const handleScrollToGoals = () => {
-    if (!wrapperRef.current || !goalsRef.current) return;
-    wrapperRef.current.scrollTo({
-      top: goalsRef.current.offsetTop,
-      behavior: "smooth",
-    });
-  };
-
   useEffect(() => {
     if (!project) return;
 
@@ -675,7 +667,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
             type="button"
             onClick={onClose}
             aria-label="Close featured modal"
-            className="absolute right-[10px] top-[10px] z-40 inline-flex h-[32px] w-[32px] items-center justify-center rounded-[999px] border border-word1-50 bg-primary-50 text-word2 shadow-[0px_0px_4px_var(--color-word1-50)] transition-[background-color,color] duration-150 ease-out hover:bg-word2-50 hover:text-primary"
+            className="group absolute right-[10px] top-[10px] z-40 inline-flex h-[28px] w-[28px] shrink-0 items-center justify-center overflow-hidden rounded-[999px] border border-word1-50 bg-primary-50 text-word2 shadow-[0px_0px_4px_0px_var(--color-word1-50)] backdrop-blur-[1px] transition-[background-color,box-shadow,color] duration-150 ease-out hover:bg-word2-50 hover:text-primary active:bg-word2-50 active:text-primary active:shadow-[0px_0px_4px_0px_var(--color-word1-50),inset_0px_1px_6px_0px_var(--color-word1-50)]"
           >
             <span className="leading-none">×</span>
           </button>
@@ -696,8 +688,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       </h2>
                       <button
                         type="button"
-                        onClick={handleScrollToGoals}
-                        className="group mt-[28px] inline-flex items-center gap-[10px] rounded-[999px] bg-highlight px-[14px] py-[7px] text-work text-primary shadow-[0px_0px_4px_var(--color-word1-50)] transition-[background-color,box-shadow] duration-150 ease-out hover:bg-word2 active:bg-word2 md:mt-[72px] md:gap-[12px] md:px-[24px] md:py-[12px] md:text-pc-work"
+                        className="pointer-events-none mt-[28px] inline-flex items-center gap-[10px] rounded-[999px] bg-highlight px-[14px] py-[7px] text-work text-primary shadow-[0px_0px_4px_var(--color-word1-50)] md:mt-[72px] md:gap-[12px] md:px-[24px] md:py-[12px] md:text-pc-work"
                         aria-label="向下滑動"
                       >
                         <span>向下滑動</span>
@@ -707,7 +698,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                             src="/figma-assets/4be1f9eed94356903838c5ac6d2df5050fca6f70.svg"
                             fill
                             sizes="(min-width: 768px) 11px, 8px"
-                            className="object-contain brightness-0 invert transition-[opacity] duration-150 ease-out group-hover:opacity-90 group-active:opacity-90"
+                            className="object-contain brightness-0 invert"
                           />
                         </span>
                       </button>
