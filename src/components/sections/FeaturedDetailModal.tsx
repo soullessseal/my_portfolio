@@ -49,6 +49,7 @@ type DetailContent = {
 
 const IMAGE_PLACEHOLDER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c9c0bb'/%3E%3C/svg%3E";
+const MOBILE_MODAL_VISIBLE_HEIGHT = "calc(100dvh - 112px)";
 
 const DEFAULT_SWISS_CONTENT: DetailContent = {
   englishTitle: "SWITZERLAND TRAVEL PROJECT",
@@ -425,7 +426,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
 
         gsap.set(heroImageRef.current, {
           width: "200vw",
-          height: "100dvh",
+          height: MOBILE_MODAL_VISIBLE_HEIGHT,
           x: 0,
           yPercent: 0,
           scale: 1,
@@ -669,7 +670,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           <div ref={wrapperRef} className="absolute inset-0 overflow-hidden [contain:layout_paint] [clip-path:inset(56px_0_0_0)] md:[clip-path:inset(80px_0_0_0)]">
             <div ref={contentRef} className="min-h-full w-full">
               <div className="w-full">
-                <section ref={heroRef} className="relative min-h-screen w-full px-[16px] pb-[16px] pt-[96px] md:px-[24px] md:pb-[20px] md:pt-[120px]">
+                <section ref={heroRef} className="relative min-h-[calc(100dvh-112px)] w-full px-[16px] pb-[16px] pt-[96px] md:min-h-screen md:px-[24px] md:pb-[20px] md:pt-[120px]">
                   <div className="relative z-20 mx-auto flex w-full max-w-[1440px] flex-col items-center">
                     <div ref={heroTitleRef} className="mt-[20px] flex flex-col items-center text-center md:mt-[28px]">
                       <p className="whitespace-nowrap text-gsap-hero-title text-gsap-hero-title-mobile text-highlight md:whitespace-normal" style={{ letterSpacing: "0px" }}>
@@ -680,7 +681,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       </h2>
                     </div>
 
-                    <div ref={heroImageRef} className="mt-[16px] h-[100dvh] w-[200vw] min-w-0 self-center overflow-hidden md:h-[100dvh] md:w-full md:self-start">
+                    <div ref={heroImageRef} className="mt-[16px] h-[calc(100dvh-112px)] w-[200vw] min-w-0 self-center overflow-hidden md:h-[100dvh] md:w-full md:self-start">
                       {getFeaturedImage(heroImage) ? (
                         <CmsImage
                           image={getFeaturedImage(heroImage)}
@@ -715,7 +716,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </div>
                 </section>
 
-                <section ref={goalsRef} className="h-screen w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={goalsRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={goalsContentRef} className="mx-auto flex h-full w-full max-w-[1440px] flex-col">
                     <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[72px]">設計目標</h3>
                     <div className="mt-[18px] grid h-full min-h-0 w-full min-w-0 flex-1 grid-cols-1 items-center gap-[28px] md:grid-cols-3 md:gap-[16px]">
@@ -729,7 +730,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </div>
                 </section>
 
-                <section ref={strategyRef} className="h-screen w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={strategyRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={strategyContentRef} className="relative h-full w-full min-w-0">
                     <h3 className="pointer-events-none absolute left-1/2 top-[56px] z-20 -translate-x-1/2 text-gsap-section-title text-word2 md:top-[72px]">設計策略</h3>
                     <div className="relative flex h-full w-full min-w-0 items-start overflow-hidden pt-[96px] md:pt-[128px]">
@@ -756,7 +757,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                 </section>
 
                 {project.key === "project-2" && detail.processFlowItems?.length ? (
-                  <section ref={processFlowRef} className="h-screen w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                  <section ref={processFlowRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                     <div ref={processFlowContentRef} className="relative h-full w-full min-w-0">
                       <h3 className="pointer-events-none absolute left-1/2 top-[56px] z-20 -translate-x-1/2 text-center text-gsap-section-title text-word2 md:top-[72px]">
                         <span className="md:hidden">
