@@ -26,9 +26,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const appIconUrl = buildSanityImageUrl(siteAssets?.brand?.appIcon?.image, { width: 192 });
 
   return {
-    title: "Betty | Designer",
+    title: "Betty 周慧萱｜UI/UX・平面設計作品集",
     description:
-      "UI/UX、平面設計與品牌視覺作品集，收錄網站介面、海報文宣、活動視覺與專案流程，展示 Betty 的設計思維與實作成果。",
+      "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
     icons: {
       icon: faviconUrl || undefined,
       shortcut: faviconUrl || undefined,

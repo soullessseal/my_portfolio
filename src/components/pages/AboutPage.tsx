@@ -39,7 +39,7 @@ export default function AboutPage({ siteAssets }: AboutPageProps) {
         </div>
       </div>
 
-      <div className="min-h-screen w-full pb-[72px] lg:hidden">
+      <div className="min-h-screen w-full pb-0 lg:hidden">
         <div className="h-[calc(54px_+_env(safe-area-inset-top))]" />
         <SectionContact device="mb" photo={siteAssets?.contact?.photo} />
         <div className="mt-[16px]">
@@ -51,7 +51,7 @@ export default function AboutPage({ siteAssets }: AboutPageProps) {
         <div className="mt-[16px]">
           <SectionTool device="mb" toolIcons={siteAssets?.toolIcons} />
         </div>
-        <div className="mt-[16px] pb-[22px]">
+        <div className="mt-[16px]">
           <SectionWorkExperience device="mb" />
         </div>
       </div>

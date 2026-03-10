@@ -97,7 +97,7 @@ export default function ArtworkPage({ projects, siteAssets }: Props) {
           </div>
         </div>
 
-        <div className="min-h-screen w-full pb-[72px] lg:hidden">
+        <div className="min-h-screen w-full pb-0 lg:hidden">
           <div className="h-[calc(54px_+_env(safe-area-inset-top))]" />
           <ArtworkFeaturedSection
             device="mb"

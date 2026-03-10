@@ -11,8 +11,6 @@ type HomePageProps = {
 };
 
 export default function HomePage({ siteAssets }: HomePageProps) {
-  const year = new Date().getFullYear();
-
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -39,9 +37,6 @@ export default function HomePage({ siteAssets }: HomePageProps) {
         <HomeHeroSection device="mb" hero={siteAssets?.hero} />
         <div className="mx-auto mt-[16px] w-full">
           <HomeNavSection device="mb" navigationButtons={siteAssets?.navigationButtons} />
-        </div>
-        <div className="mt-3 border-t border-primary bg-primary/95 px-4 py-2 text-center text-[11px] text-word2">
-          <p>Copyright © {year} Betty. All rights reserved.</p>
         </div>
       </div>
 
