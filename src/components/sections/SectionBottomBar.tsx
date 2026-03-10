@@ -153,7 +153,7 @@ export default function SectionBottomBar({
       />
       <div
         className={[
-          "pointer-events-none absolute top-[8px] h-[56px] rounded-[8px] bg-word2-50 transition-[left] ease-out",
+          "pointer-events-none absolute top-[8px] h-[58px] rounded-[8px] bg-word2-50 transition-[left] ease-out",
           activeBackgroundDurationClass,
         ].join(" ")}
         style={{

@@ -74,7 +74,7 @@ export default function WorkContent({
       />
 
       <div
-        className="flex w-full flex-1 flex-col items-start"
+        className="flex w-full flex-1 flex-col items-start gap-[8px]"
         data-name={isPc ? "Work box_PC" : "Work box_MB"}
         data-node-id={isPc ? "1011:1016" : "1011:1047"}
       >

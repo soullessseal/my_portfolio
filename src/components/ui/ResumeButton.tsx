@@ -17,7 +17,7 @@ export default function ResumeButton({
     "bg-highlight",
     "px-[8px] py-[8px] lg:px-[16px]",
     "text-primary",
-    "text-mb-h2 lg:text-pc-h3",
+    "text-mb-h3 lg:text-pc-h3",
     "transition-[background-color,box-shadow,transform] duration-150 ease-out",
     "shadow-none",
     "active:bg-[color-mix(in_srgb,var(--color-highlight)_50%,var(--color-black-50))]",
