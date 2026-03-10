@@ -29,7 +29,11 @@ export default function AppMobileBottomBar({ bottomButtons }: AppMobileBottomBar
   return (
     <div
       className={[
+<<<<<<< HEAD
         "fixed inset-x-0 bottom-0 z-30 flex justify-center bg-[var(--color-primary-85)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[2px] lg:hidden",
+=======
+        "fixed inset-x-0 bottom-0 z-30 flex justify-center pb-[env(safe-area-inset-bottom)] lg:hidden",
+>>>>>>> c69d0062f8f5efc0e910e7a3673462b3a10efc97
         isModalDetailRoute ? "pointer-events-none" : "",
       ]
         .filter(Boolean)
