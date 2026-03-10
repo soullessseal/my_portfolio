@@ -57,7 +57,7 @@ export default function AboutPage({ siteAssets }: AboutPageProps) {
       </div>
 
       <ScrollTopButton
-        className="fixed bottom-[80px] right-[12px] z-20 lg:bottom-[24px] lg:right-[24px]"
+        className="fixed bottom-[calc(88px_+_env(safe-area-inset-bottom))] right-[12px] z-20 lg:bottom-[24px] lg:right-[24px]"
         onClick={handleScrollTop}
       />
     </main>

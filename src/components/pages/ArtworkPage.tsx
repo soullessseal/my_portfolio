@@ -118,9 +118,9 @@ export default function ArtworkPage({ projects, siteAssets }: Props) {
         </div>
 
         <ScrollTopButton
-          className="fixed bottom-[80px] right-[12px] z-20 lg:bottom-[24px] lg:right-[24px]"
-          onClick={handleScrollTop}
-        />
+        className="fixed bottom-[calc(88px_+_env(safe-area-inset-bottom))] right-[12px] z-20 lg:bottom-[24px] lg:right-[24px]"
+        onClick={handleScrollTop}
+      />
       </main>
 
       <FeaturedDetailModal

@@ -146,10 +146,7 @@ export default function SectionBottomBar({
       <div
         className={[
           "absolute inset-0 flex items-center gap-[12px] px-[24px] py-[8px]",
-          "shadow-[0px_1px_5px_0px_var(--color-word1-50)]",
-          "backdrop-blur-[2px]",
           "transition-colors duration-300 ease-out",
-          "bg-[var(--color-primary-85)]",
         ].join(" ")}
         data-name="Background Bar"
         data-node-id="416:507"
