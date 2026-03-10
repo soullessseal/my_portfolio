@@ -443,6 +443,18 @@ body {
   font-family: var(--font-noto-sans), sans-serif;
 }
 
+@keyframes featured-modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (min-width: 1024px) {
   html,
   body {

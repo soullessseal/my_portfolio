@@ -663,7 +663,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
     <div className="fixed inset-0 z-50">
       <button type="button" onClick={onClose} className="absolute inset-0 bg-black-50" aria-label="Close featured modal" />
 
-      <div className="absolute inset-x-0 bottom-0 top-[56px] md:top-[80px]">
+      <div
+        className="absolute inset-x-0 bottom-0 top-[56px] md:top-[80px]"
+        style={{ animation: "featured-modal-slide-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both" }}
+      >
         <div className="relative h-full w-full overflow-hidden rounded-t-[22px] rounded-b-none border border-secondary-50 border-b-0 bg-primary shadow-[0px_0px_8px_var(--color-word1-50)] md:rounded-t-[26px]">
           <button
             type="button"
