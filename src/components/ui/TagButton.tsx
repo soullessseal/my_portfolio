@@ -14,7 +14,7 @@ export default function TagButton({
   const variantText = variant === "pc" ? "text-pc-tag" : "text-mb-tag";
 
   const baseClass =
-    "backdrop-blur-[0.75px] bg-black-50 inline-flex items-center justify-center px-[16px] py-[4px] rounded-[50px] shadow-[0px_0px_4px_var(--color-secondary-50)]";
+    "backdrop-blur-[0.75px] bg-black-50 inline-flex items-center justify-center px-[12px] py-[4px] rounded-[50px] shadow-[0px_0px_4px_var(--color-secondary-50)] lg:px-[16px]";
 
   return (
     <div

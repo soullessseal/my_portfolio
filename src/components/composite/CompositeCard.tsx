@@ -158,7 +158,7 @@ export default function CompositeCard({
       </div>
 
       <div
-        className="relative z-10 flex max-w-full flex-wrap items-start gap-[8px] transition-opacity duration-200 ease-out"
+        className="relative z-10 flex max-w-full flex-wrap items-start gap-[4px] transition-opacity duration-200 ease-out lg:gap-[8px]"
         style={{
           opacity: hideContent ? 0 : 1,
         }}
