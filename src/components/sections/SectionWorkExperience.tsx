@@ -196,7 +196,7 @@ export default function SectionWorkExperience({
       ref={sectionRef}
       className={[
         "flex w-full flex-col items-start",
-        isPc ? "gap-[16px] px-[48px]" : "gap-[8px] px-[24px]",
+        isPc ? "gap-[16px] px-[48px]" : "gap-[8px] px-[24px] pb-[10px]",
         className,
       ]
         .filter(Boolean)
