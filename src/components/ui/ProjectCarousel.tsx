@@ -208,7 +208,13 @@ export default function ProjectCarousel({
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <div className="relative overflow-hidden rounded-[18px] bg-black/5" style={{ aspectRatio: "19 / 12" }}>
+        <div
+          className={["relative overflow-hidden rounded-[18px] bg-black/5", canNav ? "cursor-pointer" : ""]
+            .filter(Boolean)
+            .join(" ")}
+          style={{ aspectRatio: "19 / 12" }}
+          onClick={canNav ? goNext : undefined}
+        >
           {current ? (
             currentVideoUrl ? (
               <video
