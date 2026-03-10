@@ -666,6 +666,9 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
       <div
         className="absolute inset-x-0 bottom-0 top-[56px] md:top-[80px]"
         style={{ animation: "featured-modal-slide-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both" }}
+        onAnimationEnd={() => {
+          ScrollTrigger.refresh();
+        }}
       >
         <div className="relative h-full w-full overflow-hidden rounded-t-[22px] rounded-b-none border border-secondary-50 border-b-0 bg-primary shadow-[0px_0px_8px_var(--color-word1-50)] md:rounded-t-[26px]">
           <button
@@ -677,7 +680,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
             <span className="leading-none">×</span>
           </button>
 
-          <div ref={wrapperRef} className="absolute inset-0 overflow-hidden [contain:layout_paint] [clip-path:inset(56px_0_0_0)] md:[clip-path:inset(80px_0_0_0)]">
+          <div ref={wrapperRef} className="absolute inset-0 overflow-hidden [contain:layout_paint]">
             <div ref={contentRef} className="min-h-full w-full">
               <div className="w-full">
                 <section ref={heroRef} className="relative min-h-[calc(100dvh-112px)] w-full px-[16px] pb-[16px] pt-[96px] md:min-h-screen md:px-[24px] md:pb-[20px] md:pt-[120px]">
@@ -796,15 +799,15 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                         </span>
                         <span className="hidden md:inline">設計流程與系統規劃</span>
                       </h3>
-                      <div className="relative flex h-full min-h-0 w-full min-w-0 items-start overflow-hidden pt-[18px] md:pt-[56px]">
-                        <div ref={processFlowTrackRef} className="flex h-full items-center gap-[32px]" style={{ width: "max-content" }}>
+                      <div className="relative flex flex-1 min-h-0 w-full min-w-0 items-start overflow-hidden pt-[18px] md:pt-[56px]">
+                        <div ref={processFlowTrackRef} className="flex h-full items-center" style={{ width: "max-content" }}>
                           {detail.processFlowItems.map((item, index) => {
                             const migratedImage = findMigratedImage(featuredImages, item.caption);
 
                             return (
-                              <article key={item.caption} className="flex h-full w-[calc(100vw-32px)] min-w-[calc(100vw-32px)] shrink-0 items-center justify-center">
-                                <div className="mx-auto flex h-[min(64vh,100%)] w-full max-w-[980px] flex-col items-center justify-center gap-[10px] md:gap-[14px]">
-                                  <div className="h-[min(60vh,100%)] w-full min-w-0 overflow-hidden rounded-[12px] border border-secondary-50">
+                              <article key={item.caption} className="flex h-full w-[calc(100vw-32px)] min-w-[calc(100vw-32px)] shrink-0 items-center justify-center px-[16px] md:w-[calc(100vw-48px)] md:min-w-[calc(100vw-48px)] md:px-[24px]">
+                                <div className="mx-auto flex h-full w-full max-w-[980px] flex-col items-center justify-center gap-[10px] pb-[6px] md:h-[min(64vh,100%)] md:gap-[14px] md:pb-0">
+                                  <div className="h-[min(44vh,100%)] w-full min-w-0 overflow-hidden rounded-[12px] border border-secondary-50 md:h-[min(60vh,100%)]">
                                     {getFeaturedImage(migratedImage) ? (
                                       <CmsImage image={getFeaturedImage(migratedImage)} alt={migratedImage?.alt || item.alt} width={1200} sizes="100vw" className="h-full w-full object-cover" />
                                     ) : (
