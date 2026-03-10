@@ -739,7 +739,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </div>
                 </section>
 
-                <section ref={goalsRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={goalsRef} className="h-[calc(100dvh-56px)] w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={goalsContentRef} className="mx-auto flex h-full w-full max-w-[1440px] flex-col">
                     <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[72px]">設計目標</h3>
                     <div className="mt-[18px] grid h-full min-h-0 w-full min-w-0 flex-1 grid-cols-1 items-center gap-[28px] md:grid-cols-3 md:gap-[16px]">
@@ -818,7 +818,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </section>
                 ) : null}
 
-                <section className="w-full bg-highlight px-[16px] py-[20px] md:px-[24px] md:py-[24px]">
+                <section className="w-full bg-highlight px-[16px] pb-[calc(20px_+_72px_+_env(safe-area-inset-bottom))] pt-[20px] md:px-[24px] md:py-[24px]">
                   <div className="mx-auto w-full max-w-[1440px] text-center">
                     <Link href="/page-about" onClick={onClose} className="group inline-flex items-center gap-[8px] text-h4 text-primary transition-all duration-150 hover:text-word2 hover:opacity-100 active:scale-[0.97] active:text-word2 active:opacity-100">
                       DESIGN BY BETTY CHOU{" "}
