@@ -758,8 +758,8 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
 
                 {project.key === "project-2" && detail.processFlowItems?.length ? (
                   <section ref={processFlowRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
-                    <div ref={processFlowContentRef} className="relative h-full w-full min-w-0">
-                      <h3 className="pointer-events-none absolute left-1/2 top-[56px] z-20 -translate-x-1/2 text-center text-gsap-section-title text-word2 md:top-[72px]">
+                    <div ref={processFlowContentRef} className="relative flex h-full w-full min-w-0 flex-col">
+                      <h3 className="pointer-events-none z-20 mt-[56px] text-center text-gsap-section-title text-word2 md:mt-[72px]">
                         <span className="md:hidden">
                           流程規劃
                           <br />
@@ -767,7 +767,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                         </span>
                         <span className="hidden md:inline">設計流程與系統規劃</span>
                       </h3>
-                      <div className="relative flex h-full w-full min-w-0 items-start overflow-hidden pt-[96px] md:pt-[128px]">
+                      <div className="relative flex h-full min-h-0 w-full min-w-0 items-start overflow-hidden pt-[18px] md:pt-[56px]">
                         <div ref={processFlowTrackRef} className="flex h-full items-center gap-[32px]" style={{ width: "max-content" }}>
                           {detail.processFlowItems.map((item, index) => {
                             const migratedImage = findMigratedImage(featuredImages, item.caption);
