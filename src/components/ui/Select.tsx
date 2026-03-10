@@ -42,6 +42,7 @@ export default function Select({ items, activeIndex, onChange, className }: Sele
   const totalL = useRef(0);
 
   const busy = useRef(false);
+  const touchStartXRef = useRef<number | null>(null);
 
   const [nodes, setNodes] = useState<NodeState[]>(() => [
     { id: "select-left", idx: wi(activeIndex - 1), slot: "L" },
@@ -309,11 +310,35 @@ export default function Select({ items, activeIndex, onChange, className }: Sele
 
   if (!n) return null;
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null) return;
+
+    const endX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const dx = endX - touchStartXRef.current;
+    touchStartXRef.current = null;
+
+    if (Math.abs(dx) < 24 || busy.current) return;
+
+    if (dx > 0) {
+      animateLeft(prevActiveIndexRef.current, true);
+      return;
+    }
+
+    animateRight(prevActiveIndexRef.current, true);
+  };
+
   return (
     <div className={[
-      "relative w-[312px] h-[122px] select-none overflow-visible",
+      "relative h-[122px] w-[312px] select-none overflow-visible touch-pan-y",
       className,
-    ].filter(Boolean).join(" ")}>
+    ].filter(Boolean).join(" ")}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
 
       {/* 顯示用弧線（原始帶漸層的 filled 路徑） */}
       <svg
