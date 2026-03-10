@@ -25,49 +25,49 @@
 
   --font-mb-h1-family: var(--font-design-sans);
   --font-mb-h1-weight: 700;
-  --font-mb-h1-size: 16px;
+  --font-mb-h1-size: 18px;
   --font-mb-h1-line-height: 1.25;
   --font-mb-h1-letter-spacing: 0px;
 
   --font-mb-h2-family: var(--font-design-sans);
   --font-mb-h2-weight: 700;
-  --font-mb-h2-size: 14px;
+  --font-mb-h2-size: 16px;
   --font-mb-h2-line-height: 1.25;
   --font-mb-h2-letter-spacing: 0px;
 
   --font-mb-h3-family: var(--font-design-sans);
   --font-mb-h3-weight: 500;
-  --font-mb-h3-size: 12px;
+  --font-mb-h3-size: 14px;
   --font-mb-h3-line-height: 1.25;
   --font-mb-h3-letter-spacing: 0px;
 
   --font-mb-h4-family: var(--font-design-sans);
   --font-mb-h4-weight: 400;
-  --font-mb-h4-size: 12px;
+  --font-mb-h4-size: 14px;
   --font-mb-h4-line-height: 1.5;
   --font-mb-h4-letter-spacing: 0px;
 
   --font-mb-h5-family: var(--font-design-sans);
   --font-mb-h5-weight: 700;
-  --font-mb-h5-size: 10px;
+  --font-mb-h5-size: 12px;
   --font-mb-h5-line-height: 1.25;
   --font-mb-h5-letter-spacing: 0px;
 
   --font-mb-nav-family: var(--font-design-sans);
   --font-mb-nav-weight: 500;
-  --font-mb-nav-size: 10px;
+  --font-mb-nav-size: 12px;
   --font-mb-nav-line-height: 1.25;
   --font-mb-nav-letter-spacing: 0px;
 
   --font-mb-tag-family: var(--font-design-sans);
   --font-mb-tag-weight: 400;
-  --font-mb-tag-size: 10px;
+  --font-mb-tag-size: 12px;
   --font-mb-tag-line-height: 1.25;
   --font-mb-tag-letter-spacing: 0px;
 
   --font-mb-work-family: var(--font-design-sans);
   --font-mb-work-weight: 500;
-  --font-mb-work-size: 14px;
+  --font-mb-work-size: 16px;
   --font-mb-work-line-height: 1.25;
   --font-mb-work-letter-spacing: 0px;
 
