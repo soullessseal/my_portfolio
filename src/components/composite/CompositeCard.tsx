@@ -63,6 +63,7 @@ export default function CompositeCard({
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const releaseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const isInteractive = !isPressed && isHovered;
   const hideContent = isHovered || isPressed;
@@ -73,8 +74,9 @@ export default function CompositeCard({
     }
   };
 
-  const handlePressStart = () => {
+  const handlePressStart = (event: React.PointerEvent<HTMLElement>) => {
     clearReleaseTimeout();
+    pointerStartRef.current = { x: event.clientX, y: event.clientY };
     setIsPressed(true);
   };
 
@@ -84,6 +86,20 @@ export default function CompositeCard({
       setIsPressed(false);
       releaseTimeoutRef.current = null;
     }, 180);
+    pointerStartRef.current = null;
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    if (!pointerStartRef.current) return;
+
+    const dx = Math.abs(event.clientX - pointerStartRef.current.x);
+    const dy = Math.abs(event.clientY - pointerStartRef.current.y);
+
+    if (dx > 8 || dy > 8) {
+      clearReleaseTimeout();
+      pointerStartRef.current = null;
+      setIsPressed(false);
+    }
   };
 
   return (
@@ -105,6 +121,7 @@ export default function CompositeCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onPointerDown={handlePressStart}
+      onPointerMove={handlePointerMove}
       onPointerUp={handlePressEnd}
       onPointerCancel={handlePressEnd}
       onPointerLeave={handlePressEnd}
