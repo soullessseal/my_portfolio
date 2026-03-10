@@ -6,6 +6,8 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import lottie from "lottie-web";
+import type { AnimationItem } from "lottie-web";
 
 import type { MigratedFeaturedMedia, SiteAssets } from "@/sanity/lib/queries";
 
@@ -50,6 +52,10 @@ type DetailContent = {
 const IMAGE_PLACEHOLDER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c9c0bb'/%3E%3C/svg%3E";
 const MOBILE_MODAL_VISIBLE_HEIGHT = "calc(100dvh - 112px)";
+const FEATURED_SCROLL_HINT_ASSETS = {
+  pc: "/figma-assets/699044657eec75e76de56108_9a9d9cb55e14430ca8893be47c5c845a.json",
+  mb: "/figma-assets/69903d4a47d25b6a96d33106_52101f6b4e3440f98f32c47b0cc3d5fa.json",
+} as const;
 
 const DEFAULT_SWISS_CONTENT: DetailContent = {
   englishTitle: "SWITZERLAND TRAVEL PROJECT",
@@ -338,6 +344,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
   const goalsRef = useRef<HTMLElement | null>(null);
   const strategyRef = useRef<HTMLElement | null>(null);
   const processFlowRef = useRef<HTMLElement | null>(null);
+  const heroHintRef = useRef<HTMLDivElement | null>(null);
+  const goalsHintRef = useRef<HTMLDivElement | null>(null);
+  const strategyHintRef = useRef<HTMLDivElement | null>(null);
+  const processFlowHintRef = useRef<HTMLDivElement | null>(null);
   const heroTitleRef = useRef<HTMLDivElement | null>(null);
   const heroImageRef = useRef<HTMLDivElement | null>(null);
   const heroDetailRef = useRef<HTMLDivElement | null>(null);
@@ -347,6 +357,18 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
   const strategyTrackRef = useRef<HTMLDivElement | null>(null);
   const processFlowContentRef = useRef<HTMLDivElement | null>(null);
   const processFlowTrackRef = useRef<HTMLDivElement | null>(null);
+  const hintTimeoutsRef = useRef<number[]>([]);
+  const hintAnimationsRef = useRef<{
+    hero: AnimationItem | null;
+    goals: AnimationItem | null;
+    strategy: AnimationItem | null;
+    process: AnimationItem | null;
+  }>({
+    hero: null,
+    goals: null,
+    strategy: null,
+    process: null,
+  });
   const detail = project ? PROJECT_DETAIL_CONTENT[project.key] ?? DEFAULT_SWISS_CONTENT : DEFAULT_SWISS_CONTENT;
   const featuredImages = project ? findFeaturedSet(siteAssets, project.key)?.images : undefined;
   const heroImage = findMigratedImage(featuredImages, detail.heroCaption);
@@ -388,6 +410,50 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
   useEffect(() => {
     if (!project) return;
 
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    const animationPath = isDesktop ? FEATURED_SCROLL_HINT_ASSETS.pc : FEATURED_SCROLL_HINT_ASSETS.mb;
+    const hintAnimations = hintAnimationsRef.current;
+    const hintConfigs = [
+      { key: "hero" as const, container: heroHintRef.current },
+      { key: "goals" as const, container: goalsHintRef.current },
+      { key: "strategy" as const, container: strategyHintRef.current },
+      { key: "process" as const, container: processFlowHintRef.current },
+    ].filter((item): item is { key: "hero" | "goals" | "strategy" | "process"; container: HTMLDivElement } => Boolean(item.container));
+
+    const loadedAnimations: Partial<Record<"hero" | "goals" | "strategy" | "process", AnimationItem>> = {};
+    const animations = hintConfigs.map(({ key, container }) => {
+      container.style.opacity = "0";
+      const animation = lottie.loadAnimation({
+        container,
+        renderer: "svg",
+        loop: true,
+        autoplay: false,
+        path: animationPath,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid meet",
+          progressiveLoad: true,
+        },
+      });
+      hintAnimations[key] = animation;
+      loadedAnimations[key] = animation;
+      return animation;
+    });
+
+    return () => {
+      hintTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      hintTimeoutsRef.current = [];
+      (["hero", "goals", "strategy", "process"] as const).forEach((key) => {
+        if (hintAnimations[key] === loadedAnimations[key]) {
+          hintAnimations[key] = null;
+        }
+      });
+      animations.forEach((animation) => animation.destroy());
+    };
+  }, [project]);
+
+  useEffect(() => {
+    if (!project) return;
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
@@ -407,6 +473,49 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
     if (!heroTitleRef.current || !heroImageRef.current || !heroDetailRef.current || !goalsTitleRef.current || !goalsContentRef.current || !strategyContentRef.current || !strategyTrackRef.current) return;
 
     const ctx = gsap.context(() => {
+      const showSectionHint = (container: HTMLDivElement | null) => {
+        if (!container) return;
+
+        const animation =
+          container === heroHintRef.current
+            ? hintAnimationsRef.current.hero
+            : container === goalsHintRef.current
+              ? hintAnimationsRef.current.goals
+              : container === strategyHintRef.current
+                ? hintAnimationsRef.current.strategy
+                : container === processFlowHintRef.current
+                  ? hintAnimationsRef.current.process
+                  : null;
+        if (!animation) return;
+
+        hintTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+        hintTimeoutsRef.current = [];
+
+        [heroHintRef.current, goalsHintRef.current, strategyHintRef.current, processFlowHintRef.current]
+          .filter((node): node is HTMLDivElement => Boolean(node))
+          .forEach((node) => {
+            if (node !== container) {
+              gsap.killTweensOf(node);
+              gsap.set(node, { autoAlpha: 0 });
+            }
+          });
+
+        animation.goToAndPlay(0, true);
+        gsap.killTweensOf(container);
+        gsap.set(container, { autoAlpha: 1 });
+
+        const timeoutId = window.setTimeout(() => {
+          gsap.to(container, {
+            autoAlpha: 0,
+            duration: 0.28,
+            ease: "power2.out",
+            onComplete: () => animation.stop(),
+          });
+        }, 3000);
+
+        hintTimeoutsRef.current.push(timeoutId);
+      };
+
       const smoother = ScrollSmoother.create({
         wrapper: wrapperRef.current!,
         content: contentRef.current!,
@@ -419,6 +528,21 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
       ScrollTrigger.refresh();
 
       const mm = gsap.matchMedia();
+
+      [
+        { section: strategyRef.current, hint: strategyHintRef.current },
+        { section: processFlowRef.current, hint: processFlowHintRef.current },
+      ]
+        .filter((item): item is { section: HTMLElement; hint: HTMLDivElement } => Boolean(item.section && item.hint))
+        .forEach(({ section, hint }) => {
+          ScrollTrigger.create({
+            trigger: section,
+            start: "bottom bottom",
+            end: "bottom bottom",
+            onEnter: () => showSectionHint(hint),
+            onEnterBack: () => showSectionHint(hint),
+          });
+        });
 
       mm.add("(max-width: 767px)", () => {
         const heroEnglishTitle = heroTitleRef.current?.querySelector("p");
@@ -472,6 +596,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           { autoAlpha: 1, x: 0, y: -72, ease: "power2.out", duration: 0.9 },
           1.12,
         );
+        heroTimeline.call(() => showSectionHint(heroHintRef.current), undefined, 1.62);
       });
 
       mm.add("(min-width: 768px)", () => {
@@ -518,6 +643,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           { autoAlpha: 1, x: 0, yPercent: 0, ease: "power2.out", duration: 0.9 },
           0.72,
         );
+        heroTimeline.call(() => showSectionHint(heroHintRef.current), undefined, 1.12);
       });
 
       const goalCards = gsap.utils.toArray<HTMLElement>("[data-goal-card]");
@@ -547,6 +673,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
         },
         ">-0.08",
       );
+      goalsTimeline.call(() => showSectionHint(goalsHintRef.current), undefined, 0.82);
       goalsTimeline.to(goalsTitleRef.current, { y: -24, autoAlpha: 0, ease: "power2.in", duration: 0.35 }, ">+0.1");
       goalsTimeline.to(
         goalCards,
@@ -737,23 +864,25 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                     <p className="mt-[24px] text-h3 text-word2">專案背景：</p>
                     <p className="mt-[4px] text-h4 text-word1">{detail.projectBackground}</p>
                   </div>
+                  <div ref={heroHintRef} className="pointer-events-none absolute bottom-[16px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                 </section>
 
-                <section ref={goalsRef} className="h-[100dvh] w-full overflow-hidden bg-highlight px-[16px] pb-[28px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={goalsRef} className="relative h-[100dvh] w-full overflow-hidden bg-highlight px-[16px] pb-[28px] pt-[80px] md:h-screen md:px-[24px] md:pb-[24px] md:pt-[96px]">
                   <div ref={goalsContentRef} className="mx-auto flex h-full w-full max-w-[1440px] flex-col">
-                    <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[72px]">設計目標</h3>
-                    <div className="mt-[18px] grid min-h-0 w-full min-w-0 flex-1 grid-cols-1 content-start gap-[20px] pb-[4px] md:h-full md:grid-cols-3 md:items-center md:gap-[16px] md:pb-0">
+                    <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[56px]">設計目標</h3>
+                    <div className="mt-[18px] grid min-h-0 w-full min-w-0 flex-1 grid-cols-1 content-start gap-[20px] pb-[4px] md:mt-[12px] md:h-full md:grid-cols-3 md:content-center md:items-center md:gap-[16px] md:pb-0">
                       {detail.goals.map((goal, index) => (
-                        <article key={goal} data-goal-card className="flex h-full w-[88%] min-w-0 justify-self-center flex-col items-center justify-center gap-[16px] overflow-hidden rounded-[14px] border-[3px] border-primary bg-[var(--color-primary-85)] p-[10px] text-center shadow-[0px_10px_24px_var(--color-black-50)] md:h-full md:max-h-[340px] md:w-full md:gap-[20px] md:p-[14px]">
+                        <article key={goal} data-goal-card className="flex h-full w-[88%] min-w-0 justify-self-center flex-col items-center justify-center gap-[16px] overflow-hidden rounded-[14px] border-[3px] border-primary bg-[var(--color-primary-85)] p-[10px] text-center shadow-[0px_10px_24px_var(--color-black-50)] md:h-full md:min-h-[420px] md:max-h-none md:w-full md:gap-[20px] md:p-[14px]">
                           <p className="text-gsap-goal-number text-highlight">{`0${index + 1}`}</p>
                           <p className="mx-auto text-center text-[16px] leading-[1.35] text-word2 md:text-[clamp(20px,1.8vw,28px)]">{goal}</p>
                         </article>
                       ))}
                     </div>
                   </div>
+                  <div ref={goalsHintRef} className="pointer-events-none absolute bottom-[16px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                 </section>
 
-                <section ref={strategyRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={strategyRef} className="relative h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={strategyContentRef} className="relative h-full w-full min-w-0">
                     <h3 className="pointer-events-none absolute left-1/2 top-[56px] z-20 -translate-x-1/2 text-gsap-section-title text-word2 md:top-[72px]">設計策略</h3>
                     <div className="relative flex h-full w-full min-w-0 items-start overflow-hidden pt-[96px] md:pt-[128px]">
@@ -777,10 +906,11 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       </div>
                     </div>
                   </div>
+                  <div ref={strategyHintRef} className="pointer-events-none absolute -bottom-[28px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                 </section>
 
                 {project.key === "project-2" && detail.processFlowItems?.length ? (
-                  <section ref={processFlowRef} className="h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                  <section ref={processFlowRef} className="relative h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                     <div ref={processFlowContentRef} className="relative flex h-full w-full min-w-0 flex-col">
                       <h3 className="pointer-events-none z-20 mt-[56px] text-center text-gsap-section-title text-word2 md:mt-[72px]">
                         <span className="md:hidden">
@@ -815,6 +945,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                         </div>
                       </div>
                     </div>
+                    <div ref={processFlowHintRef} className="pointer-events-none absolute -bottom-[28px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                   </section>
                 ) : null}
 

@@ -2,8 +2,10 @@
 
 import type { CSSProperties } from "react";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import lottie from "lottie-web";
+import type { AnimationItem } from "lottie-web";
 
 import ModalShell from "@/components/ui/ModalShell";
 import ProjectCarousel from "@/components/ui/ProjectCarousel";
@@ -86,9 +88,15 @@ function getFontStyle(prefix: "mb" | "pc", name: "h5" | "work"): CSSProperties {
   };
 }
 
+const PROJECT_MODAL_SCROLL_HINT_ASSET =
+  "/figma-assets/699044657eec75e76de56108_9a9d9cb55e14430ca8893be47c5c845a.json";
+
 export default function ProjectDetailModal({ project, closeHref }: Props) {
   const router = useRouter();
   const [isTabletUp, setIsTabletUp] = useState(false);
+  const scrollHintRef = useRef<HTMLDivElement | null>(null);
+  const scrollHintTimeoutRef = useRef<number | null>(null);
+  const scrollHintAnimationRef = useRef<AnimationItem | null>(null);
 
   const closeModal = () => {
     if (window.history.length > 1) {
@@ -108,6 +116,46 @@ export default function ProjectDetailModal({ project, closeHref }: Props) {
 
     return () => tabletQuery.removeEventListener("change", apply);
   }, []);
+
+  useEffect(() => {
+    if (!project || !isTabletUp || !scrollHintRef.current) return;
+
+    const container = scrollHintRef.current;
+    container.style.opacity = "0";
+
+    const animation = lottie.loadAnimation({
+      container,
+      renderer: "svg",
+      loop: true,
+      autoplay: false,
+      path: PROJECT_MODAL_SCROLL_HINT_ASSET,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid meet",
+        progressiveLoad: true,
+      },
+    });
+    scrollHintAnimationRef.current = animation;
+
+    const showTimeoutId = window.setTimeout(() => {
+      container.style.opacity = "0.5";
+      animation.goToAndPlay(0, true);
+
+      scrollHintTimeoutRef.current = window.setTimeout(() => {
+        container.style.opacity = "0";
+        animation.stop();
+      }, 3000);
+    }, 120);
+
+    return () => {
+      window.clearTimeout(showTimeoutId);
+      if (scrollHintTimeoutRef.current !== null) {
+        window.clearTimeout(scrollHintTimeoutRef.current);
+        scrollHintTimeoutRef.current = null;
+      }
+      scrollHintAnimationRef.current = null;
+      animation.destroy();
+    };
+  }, [project, isTabletUp]);
 
   const scrollBottomGapPx = isTabletUp ? 24 : -12;
   const tagVariant = isTabletUp ? "pc" : "mb";
@@ -181,7 +229,7 @@ export default function ProjectDetailModal({ project, closeHref }: Props) {
                 </div>
               </div>
 
-              <div className={bodyPaddingClass}>
+              <div className={`relative ${bodyPaddingClass}`}>
                 <div style={{ background: "rgba(255, 255, 255, 0.4)" }}>
                   <div className="hide-scrollbar-desktop pb-0 md:pb-6" style={scrollContentStyle}>
                     {gallerySections.length > 0 ? (
@@ -189,14 +237,19 @@ export default function ProjectDetailModal({ project, closeHref }: Props) {
                         {gallerySections.map((section, index) => (
                           <div
                             key={section._key ?? `${section.subtitle ?? "section"}-${index}`}
+                            className={index === 0 ? "relative" : undefined}
                             style={{ paddingTop: index === 0 ? 0 : 40 }}
                           >
                             <section className="flex flex-col gap-4">
                               <div className="mx-auto w-[86%] max-w-[760px] md:w-[90%] lg:w-full">
                                 {section.subtitle?.trim() ? (
-                                  <h2 className="mb-4 text-word2" style={subtitleStyle}>
-                                    {section.subtitle.trim()}
-                                  </h2>
+                                  <div className="mb-4">
+                                    <h2 className="text-word2" style={subtitleStyle}>
+                                      {section.subtitle.trim()}
+                                    </h2>
+                                  </div>
+                                ) : index === 0 ? (
+                                  <div className="mb-4 h-[1px]" />
                                 ) : null}
 
                                 <ProjectCarousel
@@ -220,6 +273,12 @@ export default function ProjectDetailModal({ project, closeHref }: Props) {
                                 />
                               </div>
                             </section>
+                            {index === 0 ? (
+                              <div
+                                ref={scrollHintRef}
+                                className="pointer-events-none absolute left-1/2 top-[0px] hidden h-[48px] w-[48px] -translate-x-1/2 opacity-0 transition-opacity duration-200 md:block"
+                              />
+                            ) : null}
                           </div>
                         ))}
                       </div>
