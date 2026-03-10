@@ -41,7 +41,7 @@ export default function BottomNavButton({
     <button
       type="button"
       className={[
-        "relative flex h-[56px] w-[96px] shrink-0 select-none items-start justify-center rounded-[8px] touch-manipulation",
+        "relative flex h-[56px] w-[96px] shrink-0 items-start justify-center rounded-[8px]",
         className,
       ]
         .filter(Boolean)
@@ -54,15 +54,10 @@ export default function BottomNavButton({
       data-name="Bottom Button"
       data-node-id={dataNodeId}
       aria-label={label}
-      style={{
-        WebkitTapHighlightColor: "transparent",
-        WebkitTouchCallout: "none",
-        userSelect: "none",
-      }}
     >
       <span
         className={[
-          "pointer-events-none flex w-full select-none flex-col items-center gap-[6px]",
+          "flex w-full flex-col items-center gap-[6px]",
           contentClassName,
         ]
           .filter(Boolean)
@@ -77,13 +72,12 @@ export default function BottomNavButton({
             alt={iconAlt}
             width={iconWidth}
             height={iconHeight}
-            className="pointer-events-none shrink-0 select-none"
-            draggable={false}
+            className="shrink-0"
           />
         </span>
         <span
           className={[
-            "select-none text-mb-nav text-center",
+            "text-mb-nav text-center",
             labelClassName,
           ]
             .filter(Boolean)

@@ -167,7 +167,7 @@ export default function SectionBottomBar({
         data-node-id="416:461"
       />
       <nav
-        className="absolute inset-0 flex select-none items-center gap-[12px] px-[24px] py-[8px] touch-manipulation"
+        className="absolute inset-0 flex items-center gap-[12px] px-[24px] py-[8px]"
         aria-label={`${activeKey} bottom navigation`}
         data-name="Composite_Bottom Button"
         data-node-id="416:466"
