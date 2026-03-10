@@ -350,6 +350,13 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
   const detail = project ? PROJECT_DETAIL_CONTENT[project.key] ?? DEFAULT_SWISS_CONTENT : DEFAULT_SWISS_CONTENT;
   const featuredImages = project ? findFeaturedSet(siteAssets, project.key)?.images : undefined;
   const heroImage = findMigratedImage(featuredImages, detail.heroCaption);
+  const handleScrollToGoals = () => {
+    if (!wrapperRef.current || !goalsRef.current) return;
+    wrapperRef.current.scrollTo({
+      top: goalsRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     if (!project) return;
@@ -676,9 +683,28 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       <p className="whitespace-nowrap text-gsap-hero-title text-gsap-hero-title-mobile text-highlight md:whitespace-normal" style={{ letterSpacing: "0px" }}>
                         {detail.englishTitle}
                       </p>
-                      <h2 className="mt-[18px] text-gsap-hero-title-zh text-word1 md:mt-[30px]" style={{ letterSpacing: "8px" }}>
+                      <h2
+                        className="mt-[12px] font-[var(--font-design-sans)] text-[clamp(34px,5.8vw,80px)] leading-none font-bold text-word1 [letter-spacing:2px] md:mt-[24px] md:[letter-spacing:8px]"
+                      >
                         {detail.title}
                       </h2>
+                      <button
+                        type="button"
+                        onClick={handleScrollToGoals}
+                        className="group mt-[28px] inline-flex items-center gap-[10px] rounded-[999px] bg-highlight px-[14px] py-[7px] text-work text-primary shadow-[0px_0px_4px_var(--color-word1-50)] transition-[background-color,box-shadow] duration-150 ease-out hover:bg-word2 active:bg-word2 md:mt-[72px] md:gap-[12px] md:px-[24px] md:py-[12px] md:text-pc-work"
+                        aria-label="向下滑動"
+                      >
+                        <span>向下滑動</span>
+                        <span className="relative h-[12px] w-[8px] rotate-90 md:h-[17px] md:w-[11px]">
+                          <Image
+                            alt=""
+                            src="/figma-assets/4be1f9eed94356903838c5ac6d2df5050fca6f70.svg"
+                            fill
+                            sizes="(min-width: 768px) 11px, 8px"
+                            className="object-contain brightness-0 invert transition-[opacity] duration-150 ease-out group-hover:opacity-90 group-active:opacity-90"
+                          />
+                        </span>
+                      </button>
                     </div>
 
                     <div ref={heroImageRef} className="mt-[16px] h-[calc(100dvh-112px)] w-[200vw] min-w-0 self-center overflow-hidden md:h-[100dvh] md:w-full md:self-start">
