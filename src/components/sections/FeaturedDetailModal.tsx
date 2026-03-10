@@ -448,9 +448,9 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           scrollTrigger: {
             trigger: heroRef.current,
             start: "bottom bottom",
-            end: "+=170%",
+            end: "+=230%",
             pin: true,
-            scrub: 1.4,
+            scrub: 1.65,
           },
         });
 
@@ -597,10 +597,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
           trigger: strategyRef.current,
           start: "top top",
           end: isMobileViewport
-            ? `+=${Math.round(145 * Math.max(1, (strategyCount - 1) / 2))}%`
-            : `+=${Math.round(130 * Math.max(1, (strategyCount - 1) / 2))}%`,
+            ? `+=${Math.round(190 * Math.max(1, (strategyCount - 1) / 2))}%`
+            : `+=${Math.round(180 * Math.max(1, (strategyCount - 1) / 2))}%`,
           pin: true,
-          scrub: isMobileViewport ? 1.1 : 1.2,
+          scrub: isMobileViewport ? 1.35 : 1.45,
         },
       });
       strategyTimeline.to({}, { duration: 0.08 }).to(strategyTrackRef.current, { xPercent: strategyMaxShiftPercent, ease: "none", duration: 0.86 }).to({}, { duration: 0.08 });
@@ -638,10 +638,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
             trigger: processFlowRef.current,
             start: "top top",
             end: isMobileViewport
-              ? `+=${Math.round(145 * Math.max(1, (processFlowCount - 1) / 2))}%`
-              : `+=${Math.round(130 * Math.max(1, (processFlowCount - 1) / 2))}%`,
+              ? `+=${Math.round(190 * Math.max(1, (processFlowCount - 1) / 2))}%`
+              : `+=${Math.round(180 * Math.max(1, (processFlowCount - 1) / 2))}%`,
             pin: true,
-            scrub: isMobileViewport ? 1.1 : 1.2,
+            scrub: isMobileViewport ? 1.35 : 1.45,
           },
         });
 

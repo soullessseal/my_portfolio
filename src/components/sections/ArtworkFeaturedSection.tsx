@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { PointerEvent as ReactPointerEvent, TouchEvent as ReactTouchEvent } from "react";
 import Image from "next/image";
 
 import type { SiteAssets } from "@/sanity/lib/queries";
@@ -181,6 +181,14 @@ export default function ArtworkFeaturedSection({
     setIsDragging(false);
   };
 
+  const handleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    handlePointerDown(event.touches[0]?.clientX ?? 0);
+  };
+
+  const handleTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
+    handlePointerMove(event.touches[0]?.clientX ?? 0);
+  };
+
   return (
     <section
       className={[
@@ -236,6 +244,10 @@ export default function ArtworkFeaturedSection({
               config.showcaseFrameClass,
             ].join(" ")}
             onDragStart={(event) => event.preventDefault()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handlePointerEnd}
+            onTouchCancel={handlePointerEnd}
             onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => {
               event.currentTarget.setPointerCapture(event.pointerId);
               handlePointerDown(event.clientX);
