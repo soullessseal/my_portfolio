@@ -29,6 +29,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Betty 周慧萱｜UI/UX・平面設計作品集",
     description:
       "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
+    formatDetection: {
+      telephone: false,
+      date: false,
+      email: false,
+      address: false,
+    },
     icons: {
       icon: faviconUrl || undefined,
       shortcut: faviconUrl || undefined,
