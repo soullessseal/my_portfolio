@@ -739,10 +739,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </div>
                 </section>
 
-                <section ref={goalsRef} className="h-[calc(100dvh-56px)] w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={goalsRef} className="h-[calc(100dvh-56px)] w-full overflow-hidden bg-highlight px-[16px] pb-[40px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={goalsContentRef} className="mx-auto flex h-full w-full max-w-[1440px] flex-col">
                     <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[72px]">設計目標</h3>
-                    <div className="mt-[18px] grid h-full min-h-0 w-full min-w-0 flex-1 grid-cols-1 items-center gap-[28px] md:grid-cols-3 md:gap-[16px]">
+                    <div className="mt-[18px] grid min-h-0 w-full min-w-0 flex-1 grid-cols-1 content-start gap-[20px] pb-[12px] md:h-full md:grid-cols-3 md:items-center md:gap-[16px] md:pb-0">
                       {detail.goals.map((goal, index) => (
                         <article key={goal} data-goal-card className="flex h-full w-[88%] min-w-0 justify-self-center flex-col items-center justify-center gap-[16px] overflow-hidden rounded-[14px] border-[3px] border-primary bg-[var(--color-primary-85)] p-[10px] text-center shadow-[0px_10px_24px_var(--color-black-50)] md:h-full md:max-h-[340px] md:w-full md:gap-[20px] md:p-[14px]">
                           <p className="text-gsap-goal-number text-highlight">{`0${index + 1}`}</p>
