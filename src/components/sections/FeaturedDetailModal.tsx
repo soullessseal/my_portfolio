@@ -739,10 +739,10 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </div>
                 </section>
 
-                <section ref={goalsRef} className="h-[calc(100dvh-56px)] w-full overflow-hidden bg-highlight px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={goalsRef} className="h-[100dvh] w-full overflow-hidden bg-highlight px-[16px] pb-[28px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={goalsContentRef} className="mx-auto flex h-full w-full max-w-[1440px] flex-col">
                     <h3 ref={goalsTitleRef} className="mt-[56px] text-center text-gsap-section-title text-primary md:mt-[72px]">設計目標</h3>
-                    <div className="mt-[18px] grid h-full min-h-0 w-full min-w-0 flex-1 grid-cols-1 items-center gap-[28px] md:grid-cols-3 md:gap-[16px]">
+                    <div className="mt-[18px] grid min-h-0 w-full min-w-0 flex-1 grid-cols-1 content-start gap-[20px] pb-[4px] md:h-full md:grid-cols-3 md:items-center md:gap-[16px] md:pb-0">
                       {detail.goals.map((goal, index) => (
                         <article key={goal} data-goal-card className="flex h-full w-[88%] min-w-0 justify-self-center flex-col items-center justify-center gap-[16px] overflow-hidden rounded-[14px] border-[3px] border-primary bg-[var(--color-primary-85)] p-[10px] text-center shadow-[0px_10px_24px_var(--color-black-50)] md:h-full md:max-h-[340px] md:w-full md:gap-[20px] md:p-[14px]">
                           <p className="text-gsap-goal-number text-highlight">{`0${index + 1}`}</p>
@@ -818,7 +818,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </section>
                 ) : null}
 
-                <section className="w-full bg-highlight px-[16px] pb-[calc(20px_+_72px_+_env(safe-area-inset-bottom))] pt-[20px] md:px-[24px] md:py-[24px]">
+                <section className="w-full bg-highlight px-[16px] pb-[calc(20px_+_56px_+_env(safe-area-inset-bottom))] pt-[20px] md:px-[24px] md:py-[24px]">
                   <div className="mx-auto w-full max-w-[1440px] text-center">
                     <Link href="/page-about" onClick={onClose} className="group inline-flex items-center gap-[8px] text-h4 text-primary transition-all duration-150 hover:text-word2 hover:opacity-100 active:scale-[0.97] active:text-word2 active:opacity-100">
                       DESIGN BY BETTY CHOU{" "}
