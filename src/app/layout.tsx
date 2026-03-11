@@ -26,22 +26,31 @@ export async function generateMetadata(): Promise<Metadata> {
   const appIconUrl = buildSanityImageUrl(siteAssets?.brand?.appIcon?.image, { width: 192 });
 
   return {
-    metadataBase: new URL("https://myportfolio-iota-orpin-95.vercel.app"),
+  metadataBase: new URL("https://myportfolio-iota-orpin-95.vercel.app"),
+  title: "Betty 周慧萱｜UI/UX・平面設計作品集",
+  description:
+    "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
+  formatDetection: {
+    telephone: false,
+    date: false,
+    email: false,
+    address: false,
+  },
+  openGraph: {
     title: "Betty 周慧萱｜UI/UX・平面設計作品集",
     description:
-      "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
-    formatDetection: {
-      telephone: false,
-      date: false,
-      email: false,
-      address: false,
-    },
-    icons: {
-      icon: faviconUrl || undefined,
-      shortcut: faviconUrl || undefined,
-      apple: appIconUrl || faviconUrl || undefined,
-    },
-  };
+      "UI/UX、平面設計與品牌視覺作品集，展示 Betty 的設計思維與專案成果。",
+    url: "https://myportfolio-iota-orpin-95.vercel.app",
+    siteName: "Betty Portfolio",
+    locale: "zh_TW",
+    type: "website",
+  },
+  icons: {
+    icon: faviconUrl || undefined,
+    shortcut: faviconUrl || undefined,
+    apple: appIconUrl || faviconUrl || undefined,
+  },
+};
 }
 
 export default async function RootLayout({
