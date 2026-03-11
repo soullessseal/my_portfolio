@@ -44,6 +44,14 @@ export async function generateMetadata(): Promise<Metadata> {
     siteName: "Betty Portfolio",
     locale: "zh_TW",
     type: "website",
+    images: [
+    {
+      url: "/og-cover.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Betty 周慧萱 UI UX Designer Portfolio",
+    },
+  ],
   },
   icons: {
     icon: faviconUrl || undefined,
