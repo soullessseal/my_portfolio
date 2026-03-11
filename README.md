@@ -27,14 +27,11 @@ https://myportfolio-iota-orpin-95.vercel.app
 - React
 - TypeScript
 - TailwindCSS
-
 ### CMS
 - Sanity (Headless CMS)
-
 ### Design Workflow
 - Figma
 - Figma MCP
 - Codex（AI-assisted component generation）
-
 ### Deployment
 - Vercel
