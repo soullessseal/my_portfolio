@@ -882,7 +882,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   <div ref={goalsHintRef} className="pointer-events-none absolute bottom-[16px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                 </section>
 
-                <section ref={strategyRef} className="relative h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                <section ref={strategyRef} className="relative h-[100dvh] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                   <div ref={strategyContentRef} className="relative h-full w-full min-w-0">
                     <h3 className="pointer-events-none absolute left-1/2 top-[56px] z-20 -translate-x-1/2 text-gsap-section-title text-word2 md:top-[72px]">設計策略</h3>
                     <div className="relative flex h-full w-full min-w-0 items-start overflow-hidden pt-[96px] md:pt-[128px]">
@@ -891,13 +891,13 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                           const migratedImage = findMigratedImage(featuredImages, item.caption);
 
                           return (
-                            <article key={item.caption} className="flex h-full w-screen min-w-0 shrink-0 items-center justify-center px-[12px] md:px-[20px]">
-                              <div className="mx-auto grid h-[min(64vh,100%)] w-full max-w-[1360px] grid-cols-1 items-center gap-[18px] md:grid-cols-2 md:gap-[56px]">
-                                <div className="h-[min(60vh,100%)] w-full max-w-[85vw] min-w-0 overflow-hidden rounded-[12px] md:max-w-none">
+                            <article key={item.caption} className="flex h-full w-screen min-w-0 shrink-0 items-start justify-center px-[12px] pt-[8px] md:items-center md:px-[20px] md:pt-0">
+                              <div className="mx-auto flex h-full w-full max-w-[1360px] flex-col items-center justify-start gap-[10px] md:grid md:h-[min(64vh,100%)] md:grid-cols-2 md:items-center md:gap-[56px]">
+                                <div className="h-[min(44vh,100%)] w-full max-w-[85vw] min-w-0 overflow-hidden rounded-[12px] md:h-[min(60vh,100%)] md:max-w-none">
                                   <StrategyMedia image={migratedImage} alt={migratedImage?.alt || item.alt} fallbackSrc={item.fallbackSrc} type={item.type} />
                                 </div>
                                 <div className="w-full max-w-[85vw] min-w-0 md:max-w-none">
-                                  <p data-strategy-text className="min-w-0 text-[16px] leading-[1.35] text-word2 md:text-[clamp(20px,1.8vw,28px)]">{item.text}</p>
+                                  <p data-strategy-text className="min-w-0 text-center text-[16px] leading-[1.35] text-word2 md:text-left md:text-[clamp(20px,1.8vw,28px)]">{item.text}</p>
                                 </div>
                               </div>
                             </article>
@@ -906,11 +906,11 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                       </div>
                     </div>
                   </div>
-                  <div ref={strategyHintRef} className="pointer-events-none absolute -bottom-[28px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
+                  <div ref={strategyHintRef} className="pointer-events-none absolute bottom-[16px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                 </section>
 
                 {project.key === "project-2" && detail.processFlowItems?.length ? (
-                  <section ref={processFlowRef} className="relative h-[calc(100dvh-112px)] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
+                  <section ref={processFlowRef} className="relative h-[100dvh] w-full overflow-hidden px-[16px] pb-[24px] pt-[80px] md:h-screen md:px-[24px] md:pb-[30px] md:pt-[110px]">
                     <div ref={processFlowContentRef} className="relative flex h-full w-full min-w-0 flex-col">
                       <h3 className="pointer-events-none z-20 mt-[56px] text-center text-gsap-section-title text-word2 md:mt-[72px]">
                         <span className="md:hidden">
@@ -926,8 +926,8 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                             const migratedImage = findMigratedImage(featuredImages, item.caption);
 
                             return (
-                              <article key={item.caption} className="flex h-full w-[calc(100vw-32px)] min-w-[calc(100vw-32px)] shrink-0 items-center justify-center px-[16px] md:w-[calc(100vw-48px)] md:min-w-[calc(100vw-48px)] md:px-[24px]">
-                                <div className="mx-auto flex h-full w-full max-w-[980px] flex-col items-center justify-center gap-[10px] pb-[6px] md:h-[min(64vh,100%)] md:gap-[14px] md:pb-0">
+                              <article key={item.caption} className="flex h-full w-[calc(100vw-32px)] min-w-[calc(100vw-32px)] shrink-0 items-start justify-center px-[16px] pt-[8px] md:w-[calc(100vw-48px)] md:min-w-[calc(100vw-48px)] md:items-center md:px-[24px] md:pt-0">
+                                <div className="mx-auto flex h-full w-full max-w-[980px] flex-col items-center justify-start gap-[10px] pb-[6px] md:h-[min(64vh,100%)] md:justify-center md:gap-[14px] md:pb-0">
                                   <div className="h-[min(44vh,100%)] w-full min-w-0 overflow-hidden rounded-[12px] border border-secondary-50 md:h-[min(60vh,100%)]">
                                     {getFeaturedImage(migratedImage) ? (
                                       <CmsImage image={getFeaturedImage(migratedImage)} alt={migratedImage?.alt || item.alt} width={1200} sizes="100vw" className="h-full w-full object-cover" />
@@ -945,7 +945,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                         </div>
                       </div>
                     </div>
-                    <div ref={processFlowHintRef} className="pointer-events-none absolute -bottom-[28px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
+                    <div ref={processFlowHintRef} className="pointer-events-none absolute bottom-[16px] left-1/2 z-30 h-[72px] w-[72px] -translate-x-1/2 opacity-0 md:bottom-[16px] md:h-[72px] md:w-[72px]" />
                   </section>
                 ) : null}
 
