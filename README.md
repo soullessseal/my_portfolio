@@ -22,6 +22,8 @@ https://myportfolio-iota-orpin-95.vercel.app
 
 ## 技術架構
 
+###AI Assistant
+- Codex（Frontend/SEO）
 ### Frontend
 - Next.js
 - React
@@ -32,6 +34,5 @@ https://myportfolio-iota-orpin-95.vercel.app
 ### Design Workflow
 - Figma
 - Figma MCP
-- Codex（AI-assisted component generation）
 ### Deployment
 - Vercel
