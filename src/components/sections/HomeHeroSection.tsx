@@ -29,7 +29,7 @@ const DEVICE_CONFIG = {
     introTextNodeId: "361:315",
     designerNodeId: "978:523",
     outerClass:
-      "h-[180px] w-full min-[360px]:h-[clamp(180px,calc(180px_+_(100vw_-_360px)_/_4),340px)]",
+      "h-[212px] w-full min-[360px]:h-[clamp(212px,calc(212px_+_(100vw_-_360px)_/_4),372px)]",
     innerClass:
       "relative mx-auto flex h-full w-full flex-col items-start justify-between px-[24px] pt-[8px] md:px-[48px]",
     tagsGapClassName:
@@ -37,7 +37,7 @@ const DEVICE_CONFIG = {
     introGapClassName:
       "gap-[8px] min-[360px]:gap-[clamp(8px,calc(8px_+_(100vw_-_360px)_/_28),20px)]",
     imageWrapperClassName:
-      "absolute right-0 top-0 h-full w-[360px] min-[360px]:w-[clamp(360px,calc(360px_+_(100vw_-_360px)_/_2),680px)]",
+      "absolute right-0 top-0 h-[180px] w-[360px] min-[360px]:h-[clamp(180px,calc(180px_+_(100vw_-_360px)_/_4),340px)] min-[360px]:w-[clamp(360px,calc(360px_+_(100vw_-_360px)_/_2),680px)]",
     imageWrapperStyle: {
       right: "max(0px, calc((100vw - 560px) / 2))",
     },
