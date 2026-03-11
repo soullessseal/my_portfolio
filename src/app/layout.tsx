@@ -75,6 +75,23 @@ export default async function RootLayout({
 
   return (
     <html lang="zh-Hant">
+    <script
+type="application/ld+json"
+dangerouslySetInnerHTML={{
+__html: JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Betty 周慧萱",
+  alternateName: "Betty",
+  jobTitle: "UI/UX Designer",
+  url: "https://myportfolio-iota-orpin-95.vercel.app",
+  image: "https://myportfolio-iota-orpin-95.vercel.app/figma-assets/og-cover.jpg",
+  sameAs: [
+    "https://github.com/soullessseal"
+  ]
+}),
+}}
+/>
       <body className={`${notoSans.variable} ${geistMono.variable} antialiased`}>
         <AppSharedHeader />
         {children}
