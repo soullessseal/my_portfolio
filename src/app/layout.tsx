@@ -10,6 +10,8 @@ import { getSiteAssets } from "@/sanity/lib/queries";
 
 import "./globals.css";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -99,6 +101,7 @@ __html: JSON.stringify({
         <AppFooter />
         <AppMobileBottomBar bottomButtons={siteAssets?.bottomButtons} />
         <SanityLive />
+        <SpeedInsights />
       </body>
     </html>
   );
