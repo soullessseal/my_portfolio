@@ -136,6 +136,7 @@ export default function ArtworkFeaturedSection({
   const projects = resolveProjects(siteAssets);
   const activeProject = projects[activeIndex];
   const dragStartXRef = useRef<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
   const dragTriggeredRef = useRef(false);
   const draggedRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -182,11 +183,27 @@ export default function ArtworkFeaturedSection({
   };
 
   const handleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
-    handlePointerDown(event.touches[0]?.clientX ?? 0);
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    draggedRef.current = false;
   };
 
-  const handleTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
-    handlePointerMove(event.touches[0]?.clientX ?? 0);
+  const handleTouchEnd = (event: ReactTouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null) return;
+
+    const endX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const deltaX = endX - touchStartXRef.current;
+    touchStartXRef.current = null;
+
+    if (Math.abs(deltaX) < 40) return;
+
+    draggedRef.current = true;
+
+    if (deltaX > 0) {
+      handlePrev();
+      return;
+    }
+
+    handleNext();
   };
 
   return (
@@ -245,22 +262,32 @@ export default function ArtworkFeaturedSection({
             ].join(" ")}
             onDragStart={(event) => event.preventDefault()}
             onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handlePointerEnd}
-            onTouchCancel={handlePointerEnd}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={() => {
+              touchStartXRef.current = null;
+            }}
             onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => {
+              if (event.pointerType === "touch") return;
               event.currentTarget.setPointerCapture(event.pointerId);
               handlePointerDown(event.clientX);
             }}
-            onPointerMove={(event) => handlePointerMove(event.clientX)}
+            onPointerMove={(event) => {
+              if (event.pointerType === "touch") return;
+              handlePointerMove(event.clientX);
+            }}
             onPointerUp={(event: ReactPointerEvent<HTMLDivElement>) => {
+              if (event.pointerType === "touch") return;
               if (event.currentTarget.hasPointerCapture(event.pointerId)) {
                 event.currentTarget.releasePointerCapture(event.pointerId);
               }
               handlePointerEnd();
             }}
-            onPointerLeave={handlePointerEnd}
+            onPointerLeave={(event) => {
+              if (event.pointerType === "touch") return;
+              handlePointerEnd();
+            }}
             onPointerCancel={(event: ReactPointerEvent<HTMLDivElement>) => {
+              if (event.pointerType === "touch") return;
               if (event.currentTarget.hasPointerCapture(event.pointerId)) {
                 event.currentTarget.releasePointerCapture(event.pointerId);
               }
