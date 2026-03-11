@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
     type: "website",
     images: [
     {
-      url: "/og-cover.jpg",
+      url: "/figma-assets/og-cover.jpg",
       width: 1200,
       height: 630,
       alt: "Betty 周慧萱 UI UX Designer Portfolio",
