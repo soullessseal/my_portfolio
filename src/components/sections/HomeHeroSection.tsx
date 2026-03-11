@@ -153,12 +153,12 @@ export default function HomeHeroSection({
           <p className={config.introTextClassName} style={config.introTextStyle} data-node-id={config.introTextNodeId}>
             <span>我是</span>
             <span className="text-highlight">
-              設計師 Betty
+              設計師Betty
               <br />
-              專注於 UI/UX、網站視覺與品牌表現
+              正在累積UI/UX能力的設計師。
             </span>
             <br />
-            <span>透過清楚的資訊結構與細緻視覺，打造兼具體驗與辨識度的作品。</span>
+            <span>希望結合視覺與體驗，做出更好的設計。</span>
           </p>
           <Image
             alt="DESIGNER"
