@@ -401,8 +401,9 @@ export async function POST(request: NextRequest) {
         const parsed = parseImageRef(imageRef);
         if (!parsed || parsed.extension !== "gif") continue;
         if (existingMap.has(imageRef)) continue;
-        // Respect manual deletions: if this GIF has been processed before, do not auto-regenerate MP4.
-        if (!force && nextProcessedSet.has(imageRef)) continue;
+        // Only skip auto-regeneration when a processed GIF still has a matching MP4.
+        // This heals partial-failure states where processedGifRefs exists but convertedMedia is missing.
+        if (!force && nextProcessedSet.has(imageRef) && existingMap.has(imageRef)) continue;
 
         const gifUrl = imageAssetUrl(projectId, dataset, imageRef);
         if (!gifUrl) continue;
