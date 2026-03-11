@@ -1,7 +1,9 @@
 import { execFile } from "node:child_process";
+import { access } from "node:fs/promises";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { constants as fsConstants } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { promisify } from "node:util";
 
 import type { NextRequest } from "next/server";
@@ -185,8 +187,39 @@ function imageAssetUrl(projectId: string, dataset: string, imageRef: string): st
   return `https://cdn.sanity.io/images/${projectId}/${dataset}/${parsed.assetId}-${parsed.width}x${parsed.height}.${parsed.extension}`;
 }
 
-function ffmpegPath(): string {
-  return process.env.FFMPEG_BIN || ffmpegStatic || "ffmpeg";
+async function assertExecutable(pathname: string): Promise<string> {
+  await access(pathname, fsConstants.X_OK);
+  return pathname;
+}
+
+async function ffmpegPath(): Promise<string> {
+  const envPath = process.env.FFMPEG_BIN;
+  if (envPath) {
+    return assertExecutable(envPath);
+  }
+
+  if (ffmpegStatic) {
+    const candidates = [
+      ffmpegStatic,
+      resolve(process.cwd(), ffmpegStatic),
+      resolve(process.cwd(), "node_modules", "ffmpeg-static", "ffmpeg"),
+      resolve(dirname(process.cwd()), "node_modules", "ffmpeg-static", "ffmpeg"),
+    ];
+
+    for (const candidate of candidates) {
+      try {
+        return await assertExecutable(candidate);
+      } catch {
+        // Try the next likely deploy path.
+      }
+    }
+
+    throw new Error(
+      `ffmpeg binary not found. ffmpeg-static resolved to "${ffmpegStatic}", but no executable was present in the deployment bundle.`
+    );
+  }
+
+  return "ffmpeg";
 }
 
 async function convertGifToMp4(gifBytes: Uint8Array, sourceRef: string): Promise<{ path: string; cleanupDir: string }> {
@@ -200,7 +233,7 @@ async function convertGifToMp4(gifBytes: Uint8Array, sourceRef: string): Promise
   await writeFile(gifPath, gifBytes);
 
   await execFileAsync(
-    ffmpegPath(),
+    await ffmpegPath(),
     [
       "-y",
       "-i",
