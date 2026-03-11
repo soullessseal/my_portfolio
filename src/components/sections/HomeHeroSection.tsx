@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import type { SiteAssets } from "@/sanity/lib/queries";
@@ -92,14 +93,16 @@ export default function HomeHeroSection({
   const heroImage = device === "pc" ? hero?.desktopImage : hero?.mobileImage ?? hero?.desktopImage;
 
   return (
-    <section
+    <Link
+      href="/page-artwork"
       className={[
-        "relative overflow-hidden bg-linear-to-b from-secondary from-[20%] to-primary to-[60%]",
+        "group relative block overflow-hidden bg-linear-to-b from-secondary from-[20%] to-primary to-[60%] cursor-pointer",
         config.outerClass,
         className,
       ]
         .filter(Boolean)
         .join(" ")}
+      aria-label="前往設計作品頁精選作品"
       data-name="Section_Hero"
       data-node-id={config.sectionNodeId}
       data-device={device}
@@ -171,6 +174,6 @@ export default function HomeHeroSection({
           />
         </div>
       </div>
-    </section>
+    </Link>
   );
 }

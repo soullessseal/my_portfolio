@@ -949,7 +949,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                   </section>
                 ) : null}
 
-                <section className="w-full bg-highlight px-[16px] pb-[calc(20px_+_56px_+_env(safe-area-inset-bottom))] pt-[20px] md:px-[24px] md:py-[24px]">
+                <section className="w-full bg-highlight px-[16px] pb-[calc(20px_+_56px_+_env(safe-area-inset-bottom))] pt-[20px] md:px-[24px] md:pt-[24px] md:pb-[120px]">
                   <div className="mx-auto w-full max-w-[1440px] text-center">
                     <Link href="/page-about" onClick={onClose} className="group inline-flex items-center gap-[8px] text-h4 text-primary transition-all duration-150 hover:text-word2 hover:opacity-100 active:scale-[0.97] active:text-word2 active:opacity-100">
                       DESIGN BY BETTY CHOU{" "}
