@@ -11,6 +11,7 @@ import { getSiteAssets } from "@/sanity/lib/queries";
 import "./globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react"
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -102,6 +103,7 @@ __html: JSON.stringify({
         <AppMobileBottomBar bottomButtons={siteAssets?.bottomButtons} />
         <SanityLive />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
