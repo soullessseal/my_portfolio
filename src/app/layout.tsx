@@ -12,6 +12,7 @@ import "./globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react"
+import Script from "next/script";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -29,42 +30,42 @@ export async function generateMetadata(): Promise<Metadata> {
   const appIconUrl = buildSanityImageUrl(siteAssets?.brand?.appIcon?.image, { width: 192 });
 
   return {
-  metadataBase: new URL("https://myportfolio-iota-orpin-95.vercel.app"),
-  title: "Betty 周慧萱｜UI/UX・平面設計作品集",
-  description:
-    "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
-  verification: {
-  google: "ZXuPCPTvMmnfw4CeVK2w_E9or1L5wRiWu5-HhfvNg2w",
-},
-  formatDetection: {
-    telephone: false,
-    date: false,
-    email: false,
-    address: false,
-  },
-  openGraph: {
+    metadataBase: new URL("https://myportfolio-iota-orpin-95.vercel.app"),
     title: "Betty 周慧萱｜UI/UX・平面設計作品集",
     description:
-      "UI/UX、平面設計與品牌視覺作品集，展示 Betty 的設計思維與專案成果。",
-    url: "https://myportfolio-iota-orpin-95.vercel.app",
-    siteName: "Betty Portfolio",
-    locale: "zh_TW",
-    type: "website",
-    images: [
-    {
-      url: "/figma-assets/og-cover.jpg",
-      width: 1200,
-      height: 630,
-      alt: "Betty 周慧萱 UI UX Designer Portfolio",
+      "Betty 周慧萱的設計作品集，收錄 UI/UX 介面設計、平面設計、品牌視覺與網站專案，展示從概念發想到實際執行的設計思維與成果。",
+    verification: {
+      google: "ZXuPCPTvMmnfw4CeVK2w_E9or1L5wRiWu5-HhfvNg2w",
     },
-  ],
-  },
-  icons: {
-    icon: faviconUrl || undefined,
-    shortcut: faviconUrl || undefined,
-    apple: appIconUrl || faviconUrl || undefined,
-  },
-};
+    formatDetection: {
+      telephone: false,
+      date: false,
+      email: false,
+      address: false,
+    },
+    openGraph: {
+      title: "Betty 周慧萱｜UI/UX・平面設計作品集",
+      description:
+        "UI/UX、平面設計與品牌視覺作品集，展示 Betty 的設計思維與專案成果。",
+      url: "https://myportfolio-iota-orpin-95.vercel.app",
+      siteName: "Betty Portfolio",
+      locale: "zh_TW",
+      type: "website",
+      images: [
+        {
+          url: "/figma-assets/og-cover.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Betty 周慧萱 UI UX Designer Portfolio",
+        },
+      ],
+    },
+    icons: {
+      icon: faviconUrl || undefined,
+      shortcut: faviconUrl || undefined,
+      apple: appIconUrl || faviconUrl || undefined,
+    },
+  };
 }
 
 export default async function RootLayout({
@@ -78,24 +79,38 @@ export default async function RootLayout({
 
   return (
     <html lang="zh-Hant">
-    <script
-type="application/ld+json"
-dangerouslySetInnerHTML={{
-__html: JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Betty 周慧萱",
-  alternateName: "Betty",
-  jobTitle: "UI/UX Designer",
-  url: "https://myportfolio-iota-orpin-95.vercel.app",
-  image: "https://myportfolio-iota-orpin-95.vercel.app/figma-assets/og-cover.jpg",
-  sameAs: [
-    "https://github.com/soullessseal"
-  ]
-}),
-}}
-/>
       <body className={`${notoSans.variable} ${geistMono.variable} antialiased`}>
+        <Script
+          id="schema-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Betty 周慧萱",
+                "alternateName": "Betty",
+                "jobTitle": "UI/UX Designer",
+                "url": "https://myportfolio-iota-orpin-95.vercel.app",
+                "image": "https://myportfolio-iota-orpin-95.vercel.app/figma-assets/og-cover.jpg",
+                "sameAs": [
+                  "https://github.com/soullessseal"
+                ]
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "Betty Portfolio",
+                "url": "https://myportfolio-iota-orpin-95.vercel.app",
+                "author": {
+                  "@type": "Person",
+                  "name": "Betty 周慧萱"
+                },
+                "inLanguage": "zh-Hant"
+              }
+            ])
+          }}
+        />
         <AppSharedHeader />
         {children}
         {modal}
