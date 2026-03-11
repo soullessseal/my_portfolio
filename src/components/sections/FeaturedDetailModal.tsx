@@ -891,7 +891,7 @@ export default function FeaturedDetailModal({ project, siteAssets, onClose }: Pr
                           const migratedImage = findMigratedImage(featuredImages, item.caption);
 
                           return (
-                            <article key={item.caption} className="flex h-full w-screen min-w-0 shrink-0 items-start justify-center px-[12px] pt-[8px] md:items-center md:px-[20px] md:pt-0">
+                            <article key={item.caption} className="flex h-full w-[calc(100vw-32px)] min-w-[calc(100vw-32px)] shrink-0 items-start justify-center px-[12px] pt-[8px] md:w-screen md:min-w-0 md:items-center md:px-[20px] md:pt-0">
                               <div className="mx-auto flex h-full w-full max-w-[1360px] flex-col items-center justify-start gap-[10px] md:grid md:h-[min(64vh,100%)] md:grid-cols-2 md:items-center md:gap-[56px]">
                                 <div className="h-[min(44vh,100%)] w-full max-w-[85vw] min-w-0 overflow-hidden rounded-[12px] md:h-[min(60vh,100%)] md:max-w-none">
                                   <StrategyMedia image={migratedImage} alt={migratedImage?.alt || item.alt} fallbackSrc={item.fallbackSrc} type={item.type} />
