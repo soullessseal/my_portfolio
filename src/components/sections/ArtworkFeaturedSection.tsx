@@ -137,6 +137,8 @@ export default function ArtworkFeaturedSection({
   const activeProject = projects[activeIndex];
   const dragStartXRef = useRef<number | null>(null);
   const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const touchSwipeLockedRef = useRef<"x" | "y" | null>(null);
   const dragTriggeredRef = useRef(false);
   const draggedRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -184,7 +186,27 @@ export default function ArtworkFeaturedSection({
 
   const handleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
     touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    touchStartYRef.current = event.touches[0]?.clientY ?? null;
+    touchSwipeLockedRef.current = null;
     draggedRef.current = false;
+  };
+
+  const handleTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+
+    const currentX = event.touches[0]?.clientX ?? touchStartXRef.current;
+    const currentY = event.touches[0]?.clientY ?? touchStartYRef.current;
+    const deltaX = currentX - touchStartXRef.current;
+    const deltaY = currentY - touchStartYRef.current;
+
+    if (touchSwipeLockedRef.current === null) {
+      if (Math.abs(deltaX) < 12 && Math.abs(deltaY) < 12) return;
+      touchSwipeLockedRef.current = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
+    }
+
+    if (touchSwipeLockedRef.current === "x") {
+      event.preventDefault();
+    }
   };
 
   const handleTouchEnd = (event: ReactTouchEvent<HTMLDivElement>) => {
@@ -193,8 +215,11 @@ export default function ArtworkFeaturedSection({
     const endX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
     const deltaX = endX - touchStartXRef.current;
     touchStartXRef.current = null;
+    touchStartYRef.current = null;
+    const swipeAxis = touchSwipeLockedRef.current;
+    touchSwipeLockedRef.current = null;
 
-    if (Math.abs(deltaX) < 40) return;
+    if (swipeAxis !== "x" || Math.abs(deltaX) < 32) return;
 
     draggedRef.current = true;
 
@@ -262,9 +287,12 @@ export default function ArtworkFeaturedSection({
             ].join(" ")}
             onDragStart={(event) => event.preventDefault()}
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onTouchCancel={() => {
               touchStartXRef.current = null;
+              touchStartYRef.current = null;
+              touchSwipeLockedRef.current = null;
             }}
             onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => {
               if (event.pointerType === "touch") return;
